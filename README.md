@@ -1,4 +1,4 @@
- ![logo-wide-lacos](https://thumb.ibb.co/f9NKXx/la_os.png)
+ ![logo-wide-lacos](http://oi66.tinypic.com/2lxvvw7.jpg)
 <!-- Space for badges -->
 
 Uma API open source escrita em Python, utilizando Django Rest Framework. É desenhado para ser extendível, escalável, simples e mutável.
