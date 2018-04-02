@@ -42,7 +42,9 @@ class HelloApiView(APIView):
         if serializer.is_valid():
             name = serializer.data.get('name')
             message = 'Hello {0}'.format(name)
-            return Response({'message': message})
+            address = serializer.data.get('address')
+            yourAddress = 'Your address is {0}'.format(address)
+            return Response({'message': message, 'address': yourAddress})
         else:
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)

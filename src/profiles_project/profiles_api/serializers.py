@@ -7,6 +7,7 @@ class HelloSerializer(serializers.Serializer):
     """Serializes a name field for testing our APIView."""
 
     name = serializers.CharField(max_length=10)
+    address = serializers.CharField(min_length=3)
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
