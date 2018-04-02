@@ -130,5 +130,7 @@ AUTH_USER_MODEL = 'profiles_api.UserProfile'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'DEFAULT_PERMISSION_CLASSES': [],
+        'TEST_REQUEST_DEFAULT_FORMAT': 'json'
     )
 }
