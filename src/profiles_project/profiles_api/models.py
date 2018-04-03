@@ -38,25 +38,42 @@ class UserProfileManager(BaseUserManager):
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Respents a "user profile" inside our system."""
 
+    login = models.CharField(max_length=255, unique=True)
+    password = models.CharField(max_length=32)
     email = models.EmailField(max_length=255, unique=True)
+    cpf = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
+    doctorName = models.CharField(max_length=255)
+    birth = models.DateField()
+    ddd = models.IntegerField()
+    whatsapp = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    genre = models.CharField(max_length=255)
+    howDidYouKnow = models.CharField(max_length=255)
+    status = models.IntegerField()
+    profile = models.CharField(max_length=255)
+    wantOngs = models.BooleanField(default=False)
+    promoted = models.BooleanField(default=False)
+    voluntaryHours = models.IntegerField()
+    created = models.DateField()
+    observation = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     objects = UserProfileManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
+    USERNAME_FIELD = 'login'
+    REQUIRED_FIELDS = ['password','email']
 
-    def get_full_name(self):
-        """Used to get a users full name."""
-
-        return self.name
-
-    def get_short_name(self):
-        """Used to get a users short name."""
+    def getName(self):
+        """Used to get a user name."""
 
         return self.name
+    
+    def getLogin(self):
+        """Used to get a user login."""
+
+        return self.login
 
     def __str__(self):
         """Django uses this when it needs to convert the object to a string"""
