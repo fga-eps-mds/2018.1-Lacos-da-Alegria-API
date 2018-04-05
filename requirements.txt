@@ -1,4 +1,5 @@
 appdirs==1.4.3
+coreapi
 Django
 djangorestframework
 packaging==16.8
@@ -7,4 +8,4 @@ pytz==2017.2
 six==1.10.0
 uWSGI==2.0.15
 djangorestframework_simplejwt
-psycopg2
+psycopg2-binary

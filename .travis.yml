@@ -1,0 +1,13 @@
+sudo: required
+
+language: python
+
+services:
+  - docker
+
+before_install:
+  - docker-compose build
+
+script:
+  - sudo docker-compose run api python src/profiles_project/manage.py makemigrations
+  - sudo docker-compose run api python src/profiles_project/manage.py migrate
