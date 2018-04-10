@@ -25,14 +25,7 @@ class HelloApiView(APIView):
     def get(self, request, format=None):
         """Returns a list of APIView features."""
 
-        an_apiview = [
-            'Uses HTTP methods as function (get, post, patch, put, delete)',
-            'It is similar to a traditional Django view',
-            'Gives you the most control over your logic',
-            'Is mapped manually to URLs'
-        ]
-
-        return Response({'message': 'Hello!', 'an_apiview': an_apiview})
+        return Response({'user': 'Luiz', 'role': 'admin'})
 
     def post(self, request):
         """Create a hello message with our name."""
@@ -63,7 +56,6 @@ class HelloApiView(APIView):
         """Deletes and object."""
 
         return Response({'method': 'delete'})
-
 
 class HelloViewSet(viewsets.ViewSet):
     """Test API ViewSet."""

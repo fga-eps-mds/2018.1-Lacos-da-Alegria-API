@@ -9,3 +9,4 @@ six==1.10.0
 uWSGI==2.0.15
 djangorestframework_simplejwt
 psycopg2-binary
+django-cors-headers
