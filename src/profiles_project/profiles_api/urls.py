@@ -13,5 +13,6 @@ router.register('feed', views.UserProfileFeedViewSet)
 
 urlpatterns = [
     url(r'^hello-view/', views.HelloApiView.as_view()),
+    url(r'^activities/', view.ActivitiesView.as_view()),
     url(r'', include(router.urls))
 ]
