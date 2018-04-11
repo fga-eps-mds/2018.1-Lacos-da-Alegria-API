@@ -1,0 +1,57 @@
+Unhandled exception in thread started by <function check_errors.<locals>.wrapper at 0x7ff5f42b6e18>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/django/utils/autoreload.py", line 225, in wrapper
+    fn(*args, **kwargs)
+  File "/usr/local/lib/python3.6/site-packages/django/core/management/commands/runserver.py", line 120, in inner_run
+    self.check(display_num_errors=True)
+  File "/usr/local/lib/python3.6/site-packages/django/core/management/base.py", line 364, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/usr/local/lib/python3.6/site-packages/django/core/management/base.py", line 351, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/usr/local/lib/python3.6/site-packages/django/core/checks/registry.py", line 73, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/usr/local/lib/python3.6/site-packages/django/core/checks/urls.py", line 40, in check_url_namespaces_unique
+    all_namespaces = _load_all_namespaces(resolver)
+  File "/usr/local/lib/python3.6/site-packages/django/core/checks/urls.py", line 57, in _load_all_namespaces
+    url_patterns = getattr(resolver, 'url_patterns', [])
+  File "/usr/local/lib/python3.6/site-packages/django/utils/functional.py", line 36, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/lib/python3.6/site-packages/django/urls/resolvers.py", line 536, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/usr/local/lib/python3.6/site-packages/django/utils/functional.py", line 36, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/lib/python3.6/site-packages/django/urls/resolvers.py", line 529, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/local/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/code/src/profiles_project/profiles_project/urls.py", line 26, in <module>
+    url(r'^api/', include('profiles_api.urls')),
+  File "/usr/local/lib/python3.6/site-packages/django/urls/conf.py", line 34, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/local/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/code/src/profiles_project/profiles_api/urls.py", line 6, in <module>
+    from . import views
+  File "/code/src/profiles_project/profiles_api/views.py", line 14, in <module>
+    from . import serializers
+  File "/code/src/profiles_project/profiles_api/serializers.py", line 43, in <module>
+    class ActivitySerializer(serializers.ModelSerializer):
+  File "/code/src/profiles_project/profiles_api/serializers.py", line 44, in ActivitySerializer
+    class Meta:
+  File "/code/src/profiles_project/profiles_api/serializers.py", line 45, in Meta
+    model = model.Activity
+NameError: name 'model' is not defined
+Performing system checks...
+
