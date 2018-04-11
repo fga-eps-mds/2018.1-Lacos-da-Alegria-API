@@ -117,19 +117,15 @@ class HelloViewSet(viewsets.ViewSet):
 class UserProfileView(APIView):
     """Test API View."""
 
-    serializer_class = serializers.HelloSerializer
+    serializer_class = serializers.UserProfileSerializer
 
     def get(self, request, format=None):
         """Returns a list of APIView features."""
 
-        an_apiview = [
-            'Uses HTTP methods as function (get, post, patch, put, delete)',
-            'It is similar to a traditional Django view',
-            'Gives you the most control over your logic',
-            'Is mapped manually to URLs'
-        ]
+        users = [user for UserProfile in models.objects.all()]
 
-        return Response({'message': 'Hello!', 'an_apiview': an_apiview})
+
+        return Response(users)
 
     def post(self, request):
         """Create a hello message with our name."""
