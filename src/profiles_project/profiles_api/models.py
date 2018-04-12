@@ -69,7 +69,7 @@
 #         """Used to get a user name."""
 
 #         return self.name
-    
+
 #     def getLogin(self):
 #         """Used to get a user login."""
 
@@ -103,9 +103,9 @@ from django.contrib.auth.models import BaseUserManager
 
 class UserProfileManager(BaseUserManager):
     """Helps Django work with our custom user model."""
-    
-    
-    def create_user(self, email, name, password=None,):
+
+
+    def create_user(self, email, name, password=None):
         """Creates a new user profile object."""
 
         if not email:
@@ -116,7 +116,7 @@ class UserProfileManager(BaseUserManager):
 
         user.set_password(password)
         user.save(using=self._db)
-        
+
         return user
 
     def create_superuser(self, email, name, password):
@@ -124,8 +124,8 @@ class UserProfileManager(BaseUserManager):
 
         user = self.create_user(email, name, password)
 
-        user.is_superuser = True
-        user.is_staff = True
+        # user.is_superuser = True
+        # user.is_staff = True
 
         user.save(using=self._db)
 
@@ -134,29 +134,29 @@ class UserProfileManager(BaseUserManager):
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Respents a "user profile" inside our system."""
-    login = models.CharField(max_length=255, unique=True)
+    # login = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=32)
     email = models.EmailField(max_length=255, unique=True)
-    cpf = models.CharField(max_length=255, unique=True)
+    # cpf = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
-    doctor_name = models.CharField(max_length=255)
-    birth = models.DateField()
-    ddd = models.IntegerField()
-    whatsapp = models.CharField(max_length=255)
+    # doctor_name = models.CharField(max_length=255)
+    # birth = models.DateField()
+    # ddd = models.IntegerField()
+    # whatsapp = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    genre = models.CharField(max_length=255)
-    how_did_you_know = models.CharField(max_length=255)
-    status = models.IntegerField()
-    profile = models.CharField(max_length=255)
-    want_ongs = models.BooleanField(default=False)
-    promoted = models.BooleanField(default=False)
-    voluntary_hours = models.IntegerField()
-    created = models.DateField()
-    
+    # genre = models.CharField(max_length=255)
+    # how_did_you_know = models.CharField(max_length=255)
+    # status = models.IntegerField()
+    # profile = models.CharField(max_length=255)
+    # want_ongs = models.BooleanField(default=False)
+    # promoted = models.BooleanField(default=False)
+    # voluntary_hours = models.IntegerField()
+    # created = models.DateField()
+
     objects = UserProfileManager()
 
 
-    USERNAME_FIELD = 'login'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
 
     def get_full_name(self):
