@@ -112,7 +112,16 @@ class UserProfileManager(BaseUserManager):
             raise ValueError('Users must have an email address.')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, name=name, login=login, cpf=cpf, birth=birth)
+        user = self.model(
+            email=email, 
+            name=name, 
+            login=login, 
+            cpf=cpf, 
+            birth=birth,
+            region=region,
+            preference=preference,
+            howDidYouKnow=howDidYouKnow
+        )
 
         user.set_password(password)
         user.save(using=self._db)
@@ -122,7 +131,7 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self, email, name, password, **kwargs):
         """Creates and saves a new superuser with given details."""
 
-        user = self.create_user(email, name, password, login, cpf, birth)
+        user = self.create_user(email, name, password, login, cpf, birth, region, preference, howDidYouKnow)
 
         # user.is_superuser = True
         # user.is_staff = True
@@ -141,11 +150,13 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     # doctor_name = models.CharField(max_length=255)
     birth = models.CharField(max_length=10)
+    region = models.CharField(max_length=30)
+    preference = models.CharField(max_length=255)
     # ddd = models.IntegerField()
     # whatsapp = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     # genre = models.CharField(max_length=255)
-    # how_did_you_know = models.CharField(max_length=255)
+    howDidYouKnow = models.CharField(max_length=255)
     # status = models.IntegerField()
     # profile = models.CharField(max_length=255)
     # want_ongs = models.BooleanField(default=False)
