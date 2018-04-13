@@ -105,24 +105,24 @@ class UserProfileManager(BaseUserManager):
     """Helps Django work with our custom user model."""
 
 
-    def create_user(self, email, name, password=None):
+    def create_user(self, email, name, password=None, **kwargs):
         """Creates a new user profile object."""
 
         if not email:
             raise ValueError('Users must have an email address.')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, name=name)
+        user = self.model(email=email, name=name, login=login)
 
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, email, name, password):
+    def create_superuser(self, email, name, password, **kwargs):
         """Creates and saves a new superuser with given details."""
 
-        user = self.create_user(email, name, password)
+        user = self.create_user(email, name, password, login)
 
         # user.is_superuser = True
         # user.is_staff = True
@@ -134,7 +134,7 @@ class UserProfileManager(BaseUserManager):
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Respents a "user profile" inside our system."""
-    # login = models.CharField(max_length=255, unique=True)
+    login = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=32)
     email = models.EmailField(max_length=255, unique=True)
     # cpf = models.CharField(max_length=255, unique=True)
