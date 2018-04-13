@@ -112,7 +112,7 @@ class UserProfileManager(BaseUserManager):
             raise ValueError('Users must have an email address.')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, name=name, login=login)
+        user = self.model(email=email, name=name, login=login, cpf=cpf, birth=birth)
 
         user.set_password(password)
         user.save(using=self._db)
@@ -122,7 +122,7 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self, email, name, password, **kwargs):
         """Creates and saves a new superuser with given details."""
 
-        user = self.create_user(email, name, password, login)
+        user = self.create_user(email, name, password, login, cpf, birth)
 
         # user.is_superuser = True
         # user.is_staff = True
@@ -137,10 +137,10 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     login = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=32)
     email = models.EmailField(max_length=255, unique=True)
-    # cpf = models.CharField(max_length=255, unique=True)
+    cpf = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     # doctor_name = models.CharField(max_length=255)
-    # birth = models.DateField()
+    birth = models.CharField(max_length=10)
     # ddd = models.IntegerField()
     # whatsapp = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
