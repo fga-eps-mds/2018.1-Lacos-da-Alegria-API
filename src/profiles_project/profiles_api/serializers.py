@@ -15,7 +15,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.UserProfile
-        fields = ('id', 'email', 'name', 'password', 'address', 'login', 'cpf', 'birth', 'region', 'preference','howDidYouKnow', 'participate', 'ddd', 'whatsapp', 'sex')
+        fields = ('id', 'email', 'name', 'password', 'address', 'login', 'cpf', 'birth', 'region', 'preference','howDidYouKnow', 'want_ongs', 'ddd', 'whatsapp', 'genre')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -31,10 +31,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
             region=validated_data['region'],
             preference=validated_data['preference'],
             howDidYouKnow=validated_data['howDidYouKnow'],
-            participate=validated_data['participate'],
+            want_ongs=validated_data['want_ongs'],
             ddd=validated_data['ddd'],
             whatsapp=validated_data['whatsapp'],
-            sex=validated_data['sex']
+            genre=validated_data['genre']
         )
 
         user.set_password(validated_data['password'])

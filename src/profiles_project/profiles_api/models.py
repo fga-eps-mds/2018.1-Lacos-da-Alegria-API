@@ -121,10 +121,10 @@ class UserProfileManager(BaseUserManager):
             region=region,
             preference=preference,
             howDidYouKnow=howDidYouKnow,
-            participate=participate,
+            want_ongs=want_ongs,
             ddd=ddd,
             whatsapp=whatsapp,
-            sex=sex
+            genre=genre
         )
 
         user.set_password(password)
@@ -135,7 +135,7 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self, email, name, password, **kwargs):
         """Creates and saves a new superuser with given details."""
 
-        user = self.create_user(email, name, password, login, cpf, birth, region, preference, howDidYouKnow, participate, ddd, whatsapp, sex)
+        user = self.create_user(email, name, password, login, cpf, birth, region, preference, howDidYouKnow, want_ongs, ddd, whatsapp, genre)
 
         # user.is_superuser = True
         # user.is_staff = True
@@ -153,18 +153,18 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     cpf = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     # doctor_name = models.CharField(max_length=255)
-    birth = models.CharField(max_length=10)
+    birth = models.DateField()
     region = models.CharField(max_length=30)
     preference = models.CharField(max_length=255)
     ddd = models.IntegerField()
     whatsapp = models.CharField(max_length=255)
-    participate = models.BooleanField()
+    #participate = models.BooleanField()
     address = models.CharField(max_length=255)
-    sex = models.CharField(max_length=255)
+    genre = models.CharField(max_length=255)
     howDidYouKnow = models.CharField(max_length=255)
     # status = models.IntegerField()
     # profile = models.CharField(max_length=255)
-    # want_ongs = models.BooleanField(default=False)
+    want_ongs = models.BooleanField(default=False)
     # promoted = models.BooleanField(default=False)
     # voluntary_hours = models.IntegerField()
     # created = models.DateField()
