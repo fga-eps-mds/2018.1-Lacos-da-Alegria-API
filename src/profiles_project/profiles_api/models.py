@@ -120,7 +120,11 @@ class UserProfileManager(BaseUserManager):
             birth=birth,
             region=region,
             preference=preference,
-            howDidYouKnow=howDidYouKnow
+            howDidYouKnow=howDidYouKnow,
+            participate=participate,
+            ddd=ddd,
+            whatsapp=whatsapp,
+            sex=sex
         )
 
         user.set_password(password)
@@ -131,7 +135,7 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self, email, name, password, **kwargs):
         """Creates and saves a new superuser with given details."""
 
-        user = self.create_user(email, name, password, login, cpf, birth, region, preference, howDidYouKnow)
+        user = self.create_user(email, name, password, login, cpf, birth, region, preference, howDidYouKnow, participate, ddd, whatsapp, sex)
 
         # user.is_superuser = True
         # user.is_staff = True
@@ -152,10 +156,11 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     birth = models.CharField(max_length=10)
     region = models.CharField(max_length=30)
     preference = models.CharField(max_length=255)
-    # ddd = models.IntegerField()
-    # whatsapp = models.CharField(max_length=255)
+    ddd = models.IntegerField()
+    whatsapp = models.CharField(max_length=255)
+    participate = models.BooleanField()
     address = models.CharField(max_length=255)
-    # genre = models.CharField(max_length=255)
+    sex = models.CharField(max_length=255)
     howDidYouKnow = models.CharField(max_length=255)
     # status = models.IntegerField()
     # profile = models.CharField(max_length=255)
