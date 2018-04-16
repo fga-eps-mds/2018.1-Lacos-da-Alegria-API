@@ -1,13 +1,29 @@
-sudo: required
-
 language: python
 
+sudo: required
+
+python:
+  - "3.6"
+
+# before_install:
+#   - cd app/
+
+# env:
+#   global:
+#     - SECRET_KEY="YOUR SECRET_KEY IN HERE BETWEEN THE QUOTES"
+#     - DB_NAME=INSERT A DB NAME
+#     - DB_USER=postgres
+#     - DB_PASS=""
+#     - DB_HOST=localhost
+#     - DB_PORT=""
+
 services:
-  - docker
+  - postgresql
 
-before_install:
-  - docker-compose build
+install:
+  - pip install -r requirements.txt
 
-script:
-  - sudo docker-compose run api python src/profiles_project/manage.py makemigrations
-  - sudo docker-compose run api python src/profiles_project/manage.py migrate
+before_script:
+  - psql -c 'create database SAME_DB_NAME_AS_ABOVE;' -U postgres
+
+script: python manage.py test
