@@ -2,6 +2,11 @@ language: python
 
 sudo: required
 
+branches:
+  only: 
+    - master
+    - develop
+
 python:
   - "3.6"
 
