@@ -146,38 +146,3 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
 class ActivityViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ActivitySerializer
     queryset = models.Activity.objects.all()
-
-    def list(self, request):
-        queryset = models.Activity.objects.all()
-        serializer = serializers.ActivitySerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def create(self, request):
-        serializer = serializers.ActivitySerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(
-                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def retrieve(self, request, pk=None):
-        """Handles getting an object by its ID."""
-
-        return Response({'http_method': 'GET'})
-
-    def update(self, request, pk=None):
-        """Handles updating an object."""
-
-        return Response({'http_method': 'PUT'})
-
-    def partial_update(self, request, pk=None):
-        """Handles updating part of an object."""
-
-        return Response({'http_method': 'PATCH'})
-
-    def destroy(self, request, pk=None):
-        """Handles removing an object."""
-
-        return Response({'http_method': 'DELETE'})
