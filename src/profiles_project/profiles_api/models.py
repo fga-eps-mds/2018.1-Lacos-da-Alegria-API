@@ -86,4 +86,8 @@ class Activity(models.Model):
     duration = models.IntegerField()
     subscription = models.BooleanField(default=False)
     call = models.BooleanField(default=False)
-    
+
+    def __str__(self):
+        """Django uses this when it needs to convert the object to a string"""
+
+        return self.name

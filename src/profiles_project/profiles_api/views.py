@@ -146,24 +146,18 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
 class ActivityViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ActivitySerializer
     queryset = models.Activity.objects.all()
-    
+
     def list(self, request):
-        """Return a hello message."""
-
-        a_viewset = [
-            'Uses actions (list, create, retrieve, update, partial_update)',
-            'Automatically maps to URLs using Routers',
-            'Provides more functionality with less code.'
-        ]
-
-        return Response({'message': 'Atividade', 'a_viewset': a_viewset})
+        queryset = models.Activity.objects.all()
+        serializer = serializers.ActivitySerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def create(self, request):
         serializer = serializers.ActivitySerializer(data=request.data)
 
         if serializer.is_valid():
-            name = serializer.data.get('name')
-            return Response({'Atividade': name})
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -187,7 +181,3 @@ class ActivityViewSet(viewsets.ModelViewSet):
         """Handles removing an object."""
 
         return Response({'http_method': 'DELETE'})
-
-
-
- 
