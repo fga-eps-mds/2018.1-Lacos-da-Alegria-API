@@ -34,18 +34,32 @@ Para rodar a API basta ter o Docker e o Docker Compose instalados e então rodar
 # Clonar este repositório 
 git clone https://github.com/fga-gpp-mds/2018.1-Lacos-da-Alegria-API.git
 
-# Construir o container docker 
-docker-compose build
+# Construir o projeto
+sudo docker-compose -f local.yml build
+
+# Criar as migrações
+sudo docker-compose -f local.yml run --rm django python3 manage.py makemigrations
 
 # Rodar as migrações
-docker-compose run api python src/profiles_project/manage.py migrate
+sudo docker-compose -f local.yml run --rm django python3 manage.py migrate
+
+# Criar um super usuário
+sudo docker-compose -f local.yml run --rm django python3 manage.py createsuperuser
+
+# Testar o linting
+sudo docker-compose -f local.yml run --rm django flake8
+
+# Verificar os testes unitários
+sudo docker-compose -f local.yml run --rm django py.test
 
 # Rodar o servidor
-docker-compose up
+sudo docker-compose -f local.yml up
 
-# Abra no navegador a API em:
+# Para acessar, abra no navegador em:
 localhost:8000/api
 ```
+
+
 
 # Contribuindo
 
@@ -88,12 +102,10 @@ Este projeto existe graças aos contribuidores. [Seja um deles!](/docs/contribut
 |Sara Silva                     |saracsas2@gmail.com             |[silvasara](https://github.com/silvasara)           |
 
 
-
-
-Comandos:
-    $ python manage.py createsuperuser
-    $ coverage run manage.py test
-    $ coverage html
-    $ open htmlcov/index.html
-    $ py.test
+Comandos:    
+    $ python manage.py createsuperuser    
+    $ coverage run manage.py test    
+    $ coverage html    
+    $ open htmlcov/index.html    
+    $ py.test    
 
