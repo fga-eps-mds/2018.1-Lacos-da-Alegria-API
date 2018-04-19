@@ -2,10 +2,11 @@
 Base settings to build other settings files upon.
 """
 
-import environ
+import environ, os
 
 ROOT_DIR = environ.Path(__file__) - 3  # (lacos_api/config/settings/base.py - 3 = lacos_api/)
 APPS_DIR = ROOT_DIR.path('lacos_api')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 env = environ.Env()
 
@@ -37,10 +38,17 @@ USE_TZ = True
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
+# DATABASES = {
+#     'default': env.db('DATABASE_URL'),
+# }
+# DATABASES['default']['ATOMIC_REQUESTS'] = True
+
 DATABASES = {
-    'default': env.db('DATABASE_URL'),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
-DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # URLS
 # ------------------------------------------------------------------------------
@@ -95,7 +103,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-# AUTH_USER_MODEL = 'general.UserProfile'
+AUTH_USER_MODEL = 'general.UserProfile'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 # LOGIN_REDIRECT_URL = 'users:redirect'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
