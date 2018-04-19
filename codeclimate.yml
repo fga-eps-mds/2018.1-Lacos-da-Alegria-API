@@ -1,0 +1,22 @@
+engines:
+  eslint:
+    enabled: false
+  csslint:
+    enabled: false
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - python
+      - javascript
+  fixme:
+    enabled: true
+  radon:
+    enabled: true
+ratings:
+  paths:
+  - "**.py"
+  - "**.js"
+exclude_paths:
+- lacos_api/static/homepage/*
+- lacos_api/templates/*

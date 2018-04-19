@@ -88,3 +88,12 @@ Este projeto existe graças aos contribuidores. [Seja um deles!](/docs/contribut
 |Sara Silva                     |saracsas2@gmail.com             |[silvasara](https://github.com/silvasara)           |
 
 
+
+
+Comandos:
+    $ python manage.py createsuperuser
+    $ coverage run manage.py test
+    $ coverage html
+    $ open htmlcov/index.html
+    $ py.test
+

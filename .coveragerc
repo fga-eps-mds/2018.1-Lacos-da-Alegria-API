@@ -1,0 +1,5 @@
+[run]
+include = lacos_api/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin
