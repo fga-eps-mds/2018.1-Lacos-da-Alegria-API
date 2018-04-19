@@ -14,5 +14,6 @@ router.register('activities', views.ActivityViewSet)
 
 urlpatterns = [
     url(r'^hello-view/', views.HelloApiView.as_view()),
+    url(r'^userprofileview', views.UserProfileView.as_view()),
     url(r'', include(router.urls))
 ]
