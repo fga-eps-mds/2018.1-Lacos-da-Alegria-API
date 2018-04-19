@@ -2,7 +2,8 @@
 Base settings to build other settings files upon.
 """
 
-import environ, os
+import environ
+import os
 
 ROOT_DIR = environ.Path(__file__) - 3  # (lacos_api/config/settings/base.py - 3 = lacos_api/)
 APPS_DIR = ROOT_DIR.path('lacos_api')
@@ -263,8 +264,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -292,7 +291,6 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
      ),
     'DEFAULT_PERMISSION_CLASSES': [],
-
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 

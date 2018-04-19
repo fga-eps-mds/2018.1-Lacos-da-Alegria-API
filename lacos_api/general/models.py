@@ -5,9 +5,9 @@ from django.contrib.auth.models import BaseUserManager
 
 # Create your models here.
 
+
 class UserProfileManager(BaseUserManager):
     """Helps Django work with our custom user model."""
-
 
     def create_user(self, email, name, password=None, **kwargs):
         """Creates a new user profile object."""
@@ -17,10 +17,10 @@ class UserProfileManager(BaseUserManager):
 
         email = self.normalize_email(email)
         user = self.model(
-            email=email, 
-            name=name, 
-            username=username, 
-            cpf=cpf, 
+            email=email,
+            name=name,
+            username=username,
+            cpf=cpf,
             birth=birth,
             region=region,
             preference=preference,
@@ -39,7 +39,21 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self, email, name, password, **kwargs):
         """Creates and saves a new superuser with given details."""
 
-        user = self.create_user(email, name, password, username, cpf, birth, region, preference, howDidYouKnow, want_ongs, ddd, whatsapp, genre)
+        user = self.create_user(
+            email,
+            name,
+            password,
+            username,
+            cpf,
+            birth,
+            region,
+            preference,
+            howDidYouKnow,
+            want_ongs,
+            ddd,
+            whatsapp,
+            genre
+        )
 
         # user.is_superuser = True
         # user.is_staff = True
@@ -62,7 +76,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     preference = models.CharField(max_length=255)
     ddd = models.IntegerField()
     whatsapp = models.CharField(max_length=255)
-    #participate = models.BooleanField()
+    # participate = models.BooleanField()
     address = models.CharField(max_length=255)
     genre = models.CharField(max_length=255)
     howDidYouKnow = models.CharField(max_length=255)
@@ -74,7 +88,6 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     # created = models.DateField()
 
     objects = UserProfileManager()
-
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['password']
@@ -107,9 +120,10 @@ class ProfileFeedItem(models.Model):
 
         return self.status_text
 
+
 class Activity(models.Model):
     name = models.CharField(max_length=60)
-    volunteers =  models.IntegerField()
+    volunteers = models.IntegerField()
     limit = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField()

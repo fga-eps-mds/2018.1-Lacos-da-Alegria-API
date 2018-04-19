@@ -15,7 +15,23 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.UserProfile
-        fields = ('id', 'email', 'name', 'password', 'address', 'username', 'cpf', 'birth', 'region', 'preference','howDidYouKnow', 'want_ongs', 'ddd', 'whatsapp', 'genre')
+        fields = (
+            'id',
+            'email',
+            'name',
+            'password',
+            'address',
+            'username',
+            'cpf',
+            'birth',
+            'region',
+            'preference',
+            'howDidYouKnow',
+            'want_ongs',
+            'ddd',
+            'whatsapp',
+            'genre'
+        )
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -50,6 +66,7 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer):
         model = models.ProfileFeedItem
         fields = ('id', 'user_profile', 'status_text', 'created_on')
         extra_kwargs = {'user_profile': {'read_only': True}}
+
 
 class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
