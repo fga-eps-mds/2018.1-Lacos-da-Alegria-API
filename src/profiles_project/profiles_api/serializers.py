@@ -55,6 +55,7 @@ class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Activity
         fields = [
+				'id',
                 'name',
                 'volunteers',
                 'limit',

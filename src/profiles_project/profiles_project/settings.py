@@ -45,7 +45,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -143,6 +142,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
      ),
     'DEFAULT_PERMISSION_CLASSES': [],
+
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
