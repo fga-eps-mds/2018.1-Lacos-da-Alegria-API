@@ -19,7 +19,7 @@ class UserProfileManager(BaseUserManager):
         user = self.model(
             email=email, 
             name=name, 
-            login=login, 
+            username=username, 
             cpf=cpf, 
             birth=birth,
             region=region,
@@ -39,7 +39,7 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self, email, name, password, **kwargs):
         """Creates and saves a new superuser with given details."""
 
-        user = self.create_user(email, name, password, login, cpf, birth, region, preference, howDidYouKnow, want_ongs, ddd, whatsapp, genre)
+        user = self.create_user(email, name, password, username, cpf, birth, region, preference, howDidYouKnow, want_ongs, ddd, whatsapp, genre)
 
         # user.is_superuser = True
         # user.is_staff = True
@@ -51,7 +51,7 @@ class UserProfileManager(BaseUserManager):
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Respents a "user profile" inside our system."""
-    login = models.CharField(max_length=255, unique=True)
+    username = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=32)
     email = models.EmailField(max_length=255, unique=True)
     cpf = models.CharField(max_length=255, unique=True)
@@ -76,8 +76,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     objects = UserProfileManager()
 
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['password']
 
     def get_full_name(self):
         """Used to get a users full name."""
