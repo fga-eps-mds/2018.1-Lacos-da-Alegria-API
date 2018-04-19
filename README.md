@@ -100,12 +100,3 @@ Este projeto existe graças aos contribuidores. [Seja um deles!](/docs/contribut
 |Renan Schadt                   |renanschadt@gmail.com           |[renan601](https://github.com/renan601)             |
 |Rômulo Vinícius de Souza       |romulovinicius10@gmail.com      |[RomuloSouza](https://github.com/RomuloSouza)       |
 |Sara Silva                     |saracsas2@gmail.com             |[silvasara](https://github.com/silvasara)           |
-
-
-Comandos:    
-    $ python manage.py createsuperuser    
-    $ coverage run manage.py test    
-    $ coverage html    
-    $ open htmlcov/index.html    
-    $ py.test    
-
