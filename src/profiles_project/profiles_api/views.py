@@ -25,14 +25,7 @@ class HelloApiView(APIView):
     def get(self, request, format=None):
         """Returns a list of APIView features."""
 
-        an_apiview = [
-            'Uses HTTP methods as function (get, post, patch, put, delete)',
-            'It is similar to a traditional Django view',
-            'Gives you the most control over your logic',
-            'Is mapped manually to URLs'
-        ]
-
-        return Response({'message': 'Hello!', 'an_apiview': an_apiview})
+        return Response({'user': 'Sara', 'hole': 'admin'})
 
     def post(self, request):
         """Create a hello message with our name."""
@@ -193,3 +186,52 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
         """Sets the user profile to the logged in user."""
 
         serializer.save(user_profile=self.request.user)
+
+class ActivityViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.ActivitySerializer
+    queryset = models.Activity.objects.all()
+    
+    def list(self, request):
+        """Return a hello message."""
+
+        a_viewset = [
+            'Uses actions (list, create, retrieve, update, partial_update)',
+            'Automatically maps to URLs using Routers',
+            'Provides more functionality with less code.'
+        ]
+
+        return Response({'message': 'Atividade', 'a_viewset': a_viewset})
+
+    def create(self, request):
+        serializer = serializers.ActivitySerializer(data=request.data)
+
+        if serializer.is_valid():
+            name = serializer.data.get('name')
+            return Response({'Atividade': name})
+        else:
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+        """Handles getting an object by its ID."""
+
+        return Response({'http_method': 'GET'})
+
+    def update(self, request, pk=None):
+        """Handles updating an object."""
+
+        return Response({'http_method': 'PUT'})
+
+    def partial_update(self, request, pk=None):
+        """Handles updating part of an object."""
+
+        return Response({'http_method': 'PATCH'})
+
+    def destroy(self, request, pk=None):
+        """Handles removing an object."""
+
+        return Response({'http_method': 'DELETE'})
+
+
+
+ 

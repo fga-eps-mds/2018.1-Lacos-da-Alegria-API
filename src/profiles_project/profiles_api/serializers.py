@@ -50,3 +50,18 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer):
         model = models.ProfileFeedItem
         fields = ('id', 'user_profile', 'status_text', 'created_on')
         extra_kwargs = {'user_profile': {'read_only': True}}
+
+class ActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Activity
+        fields = [
+                'name',
+                'volunteers',
+                'limit',
+                'created',
+                'status',
+                'time',
+                'duration',
+                'subscription',
+                'call'
+        ]
