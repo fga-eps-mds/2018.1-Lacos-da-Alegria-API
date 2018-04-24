@@ -4,7 +4,7 @@ python:
   - "3.6"
 env:
   global:
-    - CC_TEST_REPORTER_ID=f33410c64bfc2b21fb9c1040286a389153b54447650c056ab51df66abb40a11d
+    - CC_TEST_REPORTER_ID=b174adc02ae0e71e624893126348638b08d61d1b4ddb265c3077dba417f32072
 services:
   - docker
 before_install:
