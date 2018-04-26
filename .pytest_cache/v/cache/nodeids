@@ -1,3 +1,4 @@
 [
-  "lacos_api/general/tests/test_admin.py::TestMyUserCreationForm::test_succint_raises"
+  "lacos_api/general/tests/test_admin.py::TestMyUserCreationForm::test_succint_raises",
+  "lacos_api/general/tests/test_models.py::TestActivity::test_create_activity"
 ]
