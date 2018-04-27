@@ -47,7 +47,11 @@ class TestActivityURLs(APITestCase):
         self.assertEqual(Activity.objects.count(), 1)
         self.assertEqual(Activity.objects.get().name, 'hospGama')
 
-
+    def test_detail_activity(self):
+        """Ensure we can see the details of each activity"""
+        client = APIClient()
+        response = client.get('http://localhost:8000/api/activities/')
+        assert response.status_code == 200
 
 
 
