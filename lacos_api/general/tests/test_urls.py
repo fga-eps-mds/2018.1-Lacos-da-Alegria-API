@@ -1,6 +1,10 @@
 # from django.urls import reverse, resolve
 
 from test_plus.test import TestCase
+from django.urls import include, path, reverse
+from rest_framework.test import APIClient
+from rest_framework.test import APITestCase, URLPatternsTestCase
+from ..models import Activity
 
 
 class TestUserURLs(TestCase):
@@ -8,6 +12,44 @@ class TestUserURLs(TestCase):
 
     def setUp(self):
         self.user = self.make_user()
+
+
+class TestActivityURLs(APITestCase):
+
+    def test_create_activity_1(self):
+        """Ensure we are can't create an activity with invalid fields"""
+        client = APIClient()
+        response = client.post('http://localhost:8000/api/activities/',
+            {
+                'name': 'hospGama',
+                'volunteers': '30'
+            },
+            format='json'
+        )
+        assert response.status_code == 400
+
+    def test_create_activity_2(self):
+        """Ensure we can create an activity with valid fields"""
+        client = APIClient()
+        response = self.client.post('http://localhost:8000/api/activities/',
+            {
+                'name': 'hospGama',
+                'volunteers': '30',
+                'limit': 'True',
+                'status': '1',
+                'duration': '30',
+                'subscription': 'True',
+                'call': 'True'
+            },
+            format='json'
+        )
+        assert response.status_code == 201
+        self.assertEqual(Activity.objects.count(), 1)
+        self.assertEqual(Activity.objects.get().name, 'hospGama')
+
+
+
+
 
     # def test_list_reverse(self):
     #     """users:list should reverse to /users/."""
