@@ -27,6 +27,56 @@ class UserProfileTestView(TestCase):
         self.assertEqual(response.status_code,200)
 
 
+    def test_user_viewset_Post(self):
+        def setUp(self):
+            self.valid_payload = {
+                'username':'ZecaPagodinho',
+                'password':'12345abc',
+                'email':'testeeee@teste.com',
+                'cpf':'246966600',
+                'name':'zecapagodinho',
+                'birth': '2018-04-26',
+                'region':'cataratas',
+                'preference':'deus',
+                'ddd':'11',
+                'whatsapp':'40028922',
+                'address':'casa',
+                'howDidYouKnow':'pericles',
+                'want_ongs':'True'
+            }
+            self.invalid_payload = {
+                'username':'',
+                    'password':'12345abc',
+                    'email':'testeeee@teste.com',
+                    'cpf':'246966600',
+                    'name':'zecapagodinho',
+                    'birth': '2018-04-26',
+                    'region':'cataratas',
+                    'preference':'deus',
+                    'ddd':'11',
+                    'whatsapp':'40028922',
+                    'address':'casa',
+                    'howDidYouKnow':'pericles',
+                    'want_ongs':'True'
+            }
+        def test_create_valid_user(self):
+            response = client.post(
+                reverse('post'),
+                data=json.dumps(self.valid_payload),
+                content_type='application/json'
+            )
+            self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        def test_create_invalid_user(self):
+            response = client.post(
+                reverse('post'),
+                data=json.dumps(self.invalid_payload),
+                content_type='application/json'
+            )
+            self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        
+            
+
 
 
 
