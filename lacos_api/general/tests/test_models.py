@@ -1,30 +1,79 @@
 from test_plus.test import TestCase
 from django.db import transaction
 from ..models import UserProfile,Activity
-import pytest
+#from django.db import models
 
-@pytest.fixture(scope='session')
-def generic_user(tmpdir_factory):
-    user1 = tmpdir_factory.mktemp('data').UserProfile.objects.create(
-        username="ZecaPagodinho",
-        password="12345abc",
-        email="testeeee@teste.com",
-        cpf="246966600",
-        name="zecapagodinho",
-        birth= "2018-04-26",
-        region="cataratas",
-        preference="deus",
-        ddd="11",
-        whatsapp="40028922",
-        address="casa",
-        howDidYouKnow="pericles",
-        want_ongs="True"
-        )
-    return user1
+# class TestUser(TestCase):
+#
+#     def setUp(self):
+#         self.user = self.make_user()
+
+    # def test__str__(self):
+    #     self.assertEqual(
+    #         self.user.__str__(),
+    #         "testuser",  # This is the default username for self.make_user()
+    #     )
+
+    # def test_get_absolute_url(self):
+    #     self.assertEqual(self.user.get_absolute_url(), "/profiles/testuser/")
 
 class TestUserProfile(TestCase):
-    user1 = generic_user(self)
+    # def test_constraint(self):
+    #     try:
+    #         # Duplicates should be prevented.
+    #         with transaction.atomic():
+    #             UserProfile.objects.create(
+    #                 username="ZecaPagodinho",
+    #                 password="abc12345",
+    #                 email="testeeee@teste.com",
+    #                 cpf="2469666",
+    #                 name="zecapagodinho",
+    #                 birth= "2018-04-26",
+    #                 region="cataratas",
+    #                 preference="deus",
+    #                 ddd="11",
+    #                 whatsapp="40028922",
+    #                 address="casa",
+    #                 howDidYouKnow="pericles",
+    #                 want_ongs="True"
+    #                 )
+    #             self.fail('Duplicate question allowed.')
+    #     except IntegrityError:
+    #             pass
+    # def setUp(self):
+    #     with transaction.atomic():
+    #         return UserProfile.objects.create(
+    #             username="ZecaPagodinho",
+    #             password="abc12345",
+    #             email="testeeee@teste.com",
+    #         #    cpf="246966600",
+    #             name="zecapagodinho",
+    #             birth= "2018-04-26",
+    #             region="cataratas",
+    #             preference="deus",
+    #             ddd="11",
+    #             whatsapp="40028922",
+    #             address="casa",
+    #             howDidYouKnow="pericles",
+    #             want_ongs="True"
+    #        )
     def test_create_user(self):
+        # user1 = self.setUp()
+        user1 = UserProfile.objects.create(
+            username="ZecaPagodinho",
+            password="12345abc",
+            email="testeeee@teste.com",
+            cpf="246966600",
+            name="zecapagodinho",
+            birth= "2018-04-26",
+            region="cataratas",
+            preference="deus",
+            ddd="11",
+            whatsapp="40028922",
+            address="casa",
+            howDidYouKnow="pericles",
+            want_ongs="True"
+            )
         self.assertEqual(user1.username,"ZecaPagodinho")
         self.assertEqual(user1.password,"12345abc")
         self.assertEqual(user1.email,"testeeee@teste.com")
@@ -37,6 +86,3 @@ class TestUserProfile(TestCase):
         self.assertEqual(user1.address,"casa")
         self.assertEqual(user1.howDidYouKnow,"pericles")
         self.assertEqual(user1.want_ongs,"True")
-
-    def test_get_full_name(self):
-        self.assertEqual(self.user1.get_full_name(self), "ZecaPagodinho")
