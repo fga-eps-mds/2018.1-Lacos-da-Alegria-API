@@ -1,13 +1,69 @@
 # from django.urls import reverse, resolve
 
 from test_plus.test import TestCase
+from django.urls import include, path, reverse
+from rest_framework.test import APIClient
+from rest_framework.test import APITestCase, URLPatternsTestCase
+from ..models import UserProfile
 
 
 class TestUserURLs(TestCase):
     """Test URL patterns for users app."""
 
-    def setUp(self):
-        self.user = self.make_user()
+    def test_create_user_1(self):
+        client = APIClient()
+        response = client.post('http://localhost:8000/api/profile/',
+            {
+                'name' : 'ZecaPagodinho',
+            },
+            format='json'
+        )
+        assert response.status_code == 400
+
+    def test_create_user_2(self):
+        client = APIClient()
+        response = self.client.post('http://localhost:8000/api/profile/',
+            {    
+                'username':'ZecaPagodinho',
+                'password':'12345abc',
+                'email':'testeeee@teste.com',
+                'cpf':'246966600',
+                'name':'zecapagodinho',
+                'birth': '2018-04-26',
+                'region':'cataratas',
+                'preference':'deus',
+                'ddd':'11',
+                'whatsapp':'40028922',
+                'address':'casa',
+                'howDidYouKnow':'pericles',
+                'want_ongs':'True',
+                'genre' : 'M'
+            },
+            format='json'
+        )
+        assert response.status_code == 201
+        self.assertEqual(UserProfile.objects.count(),1)
+        self.assertEqual(UserProfile.objects.get().username,'ZecaPagodinho')
+
+    def test_detail_user(self):
+        client = APIClient()
+        response = client.get('http://localhost:8000/api/profile/')
+        assert response.status_code == 200
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # def test_list_reverse(self):
     #     """users:list should reverse to /users/."""
