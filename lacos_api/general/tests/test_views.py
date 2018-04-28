@@ -1,5 +1,9 @@
 from django.test import RequestFactory
-
+from django.urls import reverse
+from ..models import UserProfile
+from rest_framework.test import APIRequestFactory
+from ..urls import urlpatterns
+from ..views import UserProfileViewSet
 from test_plus.test import TestCase
 
 # from ..views import (UserRedirectView, UserUpdateView)
@@ -10,6 +14,41 @@ class BaseUserTestCase(TestCase):
     def setUp(self):
         self.user = self.make_user()
         self.factory = RequestFactory()
+
+class UserProfileTestView(TestCase):
+    def test_user_viewset(self):
+        request = APIRequestFactory().get("")
+        user_detail = UserProfileViewSet.as_view({'get': 'retrieve'})
+        user = UserProfile.objects.create(username = "ZecaPagodinho",password="12345abc",email="testeeee@teste.com",
+                                          cpf="246966600",name="zecapagodinho",birth= "2018-04-26",region="cataratas",
+                                          preference="deus",ddd="11",whatsapp="40028922",address="casa",
+                                          howDidYouKnow="pericles",want_ongs="True")
+        response = user_detail(request, pk=user.pk)
+        self.assertEqual(response.status_code,200)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # class TestUserRedirectView(BaseUserTestCase):

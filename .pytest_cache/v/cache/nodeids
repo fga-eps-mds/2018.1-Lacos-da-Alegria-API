@@ -1,4 +1,5 @@
 [
   "lacos_api/general/tests/test_admin.py::TestMyUserCreationForm::test_succint_raises",
-  "lacos_api/general/tests/test_models.py::TestUserProfile::test_create_user"
+  "lacos_api/general/tests/test_models.py::TestUserProfile::test_create_user",
+  "lacos_api/general/tests/test_views.py::UserProfileTestView::test_user_viewset"
 ]
