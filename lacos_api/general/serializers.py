@@ -59,13 +59,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return user
 
 
-class ProfileFeedItemSerializer(serializers.ModelSerializer):
-    """A serializer for profile feed items."""
-
-    class Meta:
-        model = models.ProfileFeedItem
-        fields = ('id', 'user_profile', 'status_text', 'created_on')
-        extra_kwargs = {'user_profile': {'read_only': True}}
+# class ProfileFeedItemSerializer(serializers.ModelSerializer):
+#     """A serializer for profile feed items."""
+#
+#     class Meta:
+#         model = models.ProfileFeedItem
+#         fields = ('id', 'user_profile', 'status_text', 'created_on')
+#         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -81,5 +81,10 @@ class ActivitySerializer(serializers.ModelSerializer):
             'time',
             'duration',
             'subscription',
-            'call'
+            'call',
         ]
+        
+class SubscribedListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.SubscribedList
+        fields = [ 'list' ]
