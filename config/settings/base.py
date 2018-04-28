@@ -93,7 +93,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
 MIGRATION_MODULES = {
-    'sites': 'lacos_api.contrib.sites.migrations'
+ 'general': 'lacos_api.general.migrations'
 }
 
 # AUTHENTICATION

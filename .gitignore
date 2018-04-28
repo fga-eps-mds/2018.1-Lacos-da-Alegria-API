@@ -292,3 +292,5 @@ lacos_api/media/
 .env
 .envs/*
 !.envs/.local/
+
+lacos_api/general/migrations/
