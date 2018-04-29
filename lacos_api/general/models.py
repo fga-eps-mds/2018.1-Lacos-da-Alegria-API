@@ -86,6 +86,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     # promoted = models.BooleanField(default=False)
     # voluntary_hours = models.IntegerField()
     # created = models.DateField()
+    activities = models.IntegerField()
 
     objects = UserProfileManager()
 
@@ -121,4 +122,4 @@ class Activity(models.Model):
     call = models.BooleanField(default=False)
 
 class SubscribedList(models.Model):
-    list = models.ForeignKey(auth.UserProfile, on_delete=models.CASCADE)
+    list = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

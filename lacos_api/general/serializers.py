@@ -30,7 +30,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'want_ongs',
             'ddd',
             'whatsapp',
-            'genre'
+            'genre',
+            'activities'
         )
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -50,7 +51,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             want_ongs=validated_data['want_ongs'],
             ddd=validated_data['ddd'],
             whatsapp=validated_data['whatsapp'],
-            genre=validated_data['genre']
+            genre=validated_data['genre'],
+            activities=validated_data['activities']
         )
 
         user.set_password(validated_data['password'])
@@ -83,7 +85,7 @@ class ActivitySerializer(serializers.ModelSerializer):
             'subscription',
             'call',
         ]
-        
+
 class SubscribedListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.SubscribedList
