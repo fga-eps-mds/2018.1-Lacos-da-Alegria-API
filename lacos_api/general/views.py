@@ -1,13 +1,11 @@
-# from django.shortcuts import render
 
-from rest_framework import viewsets
+from rest_framework import  filters, status, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework import filters
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.decorators import action
 # from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.permissions import IsAuthenticated
 
@@ -25,6 +23,28 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.UpdateOwnProfile,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'email',)
+
+    @action(methods=['get'], detail=True)
+    def relate_with_activity(self, request, pk=None):
+        user_pk = pk
+        activity_pk = request.query_params.get('activity_key', None)
+
+        response = None
+        if activity_pk is not None:
+            user = self.queryset.get(pk=user_pk)
+
+            try:
+                activity = models.Activity.objects.get(pk=activity_pk)
+                user.activities.add(activity)
+
+                response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
+            except models.Activity.DoesNotExist:
+                response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
+
+        else:
+            response = Response({'status': 'Missing activity_pk param'}, status.HTTP_400_BAD_REQUEST)
+
+        return response
 
 
 class LoginViewSet(viewsets.ViewSet):
