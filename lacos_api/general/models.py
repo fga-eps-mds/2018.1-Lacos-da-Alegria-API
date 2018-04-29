@@ -3,8 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 
-# Create your models here.
-
 
 class UserProfileManager(BaseUserManager):
     """Helps Django work with our custom user model."""
@@ -62,6 +60,16 @@ class UserProfileManager(BaseUserManager):
 
         return user
 
+class Activity(models.Model):
+    name = models.CharField(max_length=60)
+    volunteers = models.IntegerField()
+    limit = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    status = models.IntegerField()
+    time = models.DateTimeField(auto_now_add=True)
+    duration = models.IntegerField()
+    subscription = models.BooleanField(default=False)
+    call = models.BooleanField(default=False)
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Respents a "user profile" inside our system."""
@@ -86,7 +94,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     # promoted = models.BooleanField(default=False)
     # voluntary_hours = models.IntegerField()
     # created = models.DateField()
-    activities = models.IntegerField()
+    #activities = models.ManyToManyField(Activity)
 
     objects = UserProfileManager()
 
@@ -107,19 +115,3 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         """Django uses this when it needs to convert the object to a string"""
 
         return self.email
-
-
-
-class Activity(models.Model):
-    name = models.CharField(max_length=60)
-    volunteers = models.IntegerField()
-    limit = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True)
-    status = models.IntegerField()
-    time = models.DateTimeField(auto_now_add=True)
-    duration = models.IntegerField()
-    subscription = models.BooleanField(default=False)
-    call = models.BooleanField(default=False)
-
-class SubscribedList(models.Model):
-    list = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
