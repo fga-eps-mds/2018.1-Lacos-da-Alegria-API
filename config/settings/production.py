@@ -1,4 +1,5 @@
 import logging
+import django
 
 from .base import *  # noqa
 from .base import env
@@ -205,3 +206,4 @@ RAVEN_CONFIG = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+django.setup()
