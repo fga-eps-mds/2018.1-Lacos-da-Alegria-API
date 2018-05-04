@@ -3,7 +3,7 @@
 from test_plus.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
-from ..models import Activity
+from ..models import Activity, UserProfile
 
 
 class TestUserURLs(TestCase):
@@ -52,6 +52,73 @@ class TestActivityURLs(APITestCase):
         client = APIClient()
         response = client.get('http://localhost:8000/api/activities/')
         assert response.status_code == 200
+
+    def test_user_login(self):
+        """Ensure we can lo gin with the username and password of an existent user"""
+        client = APIClient()
+        response = self.client.post('http://localhost:8000/api/profile/',
+            {
+                'username':'ZecaPagodinho',
+                'password':'12345abc',
+                'email':'testeeee@teste.com',
+                'cpf':'246966600',
+                'name':'zecapagodinho',
+                'birth': '2018-04-26',
+                'region':'cataratas',
+                'preference':'deus',
+                'ddd':'11',
+                'whatsapp':'40028922',
+                'address':'casa',
+                'howDidYouKnow':'pericles',
+                'want_ongs':'True',
+                'genre' : 'M'
+            },
+            format='json'
+        )
+        assert response.status_code == 201
+
+        response = self.client.post('http://localhost:8000/api/token/',
+            {
+                'username':'ZecaPagodinho',
+                'password':'12345abc',
+            },
+            format='json'
+        )
+        assert response.status_code == 200
+
+
+    def test_user_login_2(self):
+        """Ensure we can't log in with the username and the wrong password of a user"""
+        client = APIClient()
+        response = self.client.post('http://localhost:8000/api/profile/',
+            {
+                'username':'ZecaPagodinho',
+                'password':'12345abc',
+                'email':'testeeee@teste.com',
+                'cpf':'246966600',
+                'name':'zecapagodinho',
+                'birth': '2018-04-26',
+                'region':'cataratas',
+                'preference':'deus',
+                'ddd':'11',
+                'whatsapp':'40028922',
+                'address':'casa',
+                'howDidYouKnow':'pericles',
+                'want_ongs':'True',
+                'genre' : 'M'
+            },
+            format='json'
+        )
+        assert response.status_code == 201
+
+        response = self.client.post('http://localhost:8000/api/token/',
+            {
+                'username':'ZecaPagodinho',
+                'password':'12345abcdefg',
+            },
+            format='json'
+        )
+        assert response.status_code == 400
 
     # def test_list_reverse(self):
     #     """users:list should reverse to /users/."""
