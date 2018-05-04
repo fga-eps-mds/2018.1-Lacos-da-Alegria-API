@@ -307,7 +307,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 
     'ALGORITHM': 'HS256',
-    #'SIGNING_KEY': settings.SECRET_KEY,
+    # 'SIGNING_KEY': settings.SECRET_KEY,
     'VERIFYING_KEY': None,
 
     'AUTH_HEADER_TYPES': ('Bearer',),

@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'', include(router.urls)),
     url(r'^api/token/$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     url(r'^api/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
-    url(r'^api/token/verify/$', TokenVerifyView.as_view(), name='token_verify') 
+    url(r'^api/token/verify/$', TokenVerifyView.as_view(), name='token_verify')
 ]
