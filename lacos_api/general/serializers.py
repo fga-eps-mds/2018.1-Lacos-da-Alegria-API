@@ -45,7 +45,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             ddd=validated_data['ddd'],
             whatsapp=validated_data['whatsapp'],
             genre=validated_data['genre'],
-            activities=validated_data['activities']
         )
 
         user.set_password(validated_data['password'])
