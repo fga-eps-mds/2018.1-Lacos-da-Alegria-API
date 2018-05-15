@@ -29,6 +29,7 @@ class TestActivity(TestCase):
             subscription="True",
             call="True"
         )
+
     # Verify if the activity was created
     def test_create_activity(self):
         w = self.setUp()
