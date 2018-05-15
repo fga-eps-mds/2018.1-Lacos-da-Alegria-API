@@ -18,7 +18,7 @@ class TestUser(TestCase):
 
 
 class TestActivity(TestCase):
-
+    # Should create an Activity Model
     def setUp(self):
         return Activity.objects.create(
             name="hospGama",
@@ -29,7 +29,7 @@ class TestActivity(TestCase):
             subscription="True",
             call="True"
         )
-
+    # Verify if the activity was created
     def test_create_activity(self):
         w = self.setUp()
         self.assertEqual(w.name, "hospGama")

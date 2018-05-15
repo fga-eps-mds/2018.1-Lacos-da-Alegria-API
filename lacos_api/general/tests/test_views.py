@@ -15,6 +15,7 @@ class BaseUserTestCase(TestCase):
 
 
 class ActivityTestView(TestCase):
+    # Should create activity view
     def test_activity_viewset(self):
         request = APIRequestFactory().get("")
         activity_detail = ActivityViewSet.as_view({'get': 'retrieve'})
