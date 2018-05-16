@@ -81,5 +81,6 @@ class ActivitySerializer(serializers.ModelSerializer):
             'time',
             'duration',
             'subscription',
-            'call'
+            'call',
+            'institution'
         ]

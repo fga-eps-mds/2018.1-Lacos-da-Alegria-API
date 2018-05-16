@@ -27,7 +27,8 @@ class TestActivity(TestCase):
             status="1",
             duration="60",
             subscription="True",
-            call="True"
+            call="True",
+            institution="True"
         )
     # Verify if the activity was created
     def test_create_activity(self):
@@ -39,3 +40,4 @@ class TestActivity(TestCase):
         self.assertEqual(w.duration, "60")
         self.assertEqual(w.subscription, "True")
         self.assertEqual(w.call, "True")
+        self.assertEqual(w.institution, "True")
