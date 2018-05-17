@@ -1,4 +1,5 @@
 from test_plus.test import TestCase
+from ..models import Activity
 
 
 class TestUser(TestCase):
@@ -14,3 +15,27 @@ class TestUser(TestCase):
 
     # def test_get_absolute_url(self):
     #     self.assertEqual(self.user.get_absolute_url(), "/profiles/testuser/")
+
+
+class TestActivity(TestCase):
+
+    def setUp(self):
+        return Activity.objects.create(
+            name="hospGama",
+            volunteers="30",
+            limit="True",
+            status="1",
+            duration="60",
+            subscription="True",
+            call="True"
+        )
+
+    def test_create_activity(self):
+        w = self.setUp()
+        self.assertEqual(w.name, "hospGama")
+        self.assertEqual(w.volunteers, "30")
+        self.assertEqual(w.limit, "True")
+        self.assertEqual(w.status, "1")
+        self.assertEqual(w.duration, "60")
+        self.assertEqual(w.subscription, "True")
+        self.assertEqual(w.call, "True")

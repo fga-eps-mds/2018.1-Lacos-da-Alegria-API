@@ -1,6 +1,8 @@
 from django.test import RequestFactory
-
+from ..models import Activity
+from rest_framework.test import APIRequestFactory
 from test_plus.test import TestCase
+from ..views import ActivityViewSet
 
 # from ..views import (UserRedirectView, UserUpdateView)
 
@@ -11,6 +13,22 @@ class BaseUserTestCase(TestCase):
         self.user = self.make_user()
         self.factory = RequestFactory()
 
+
+class ActivityTestView(TestCase):
+    def test_activity_viewset(self):
+        request = APIRequestFactory().get("")
+        activity_detail = ActivityViewSet.as_view({'get': 'retrieve'})
+        activity = Activity.objects.create(
+            name="hospGama",
+            volunteers="30",
+            limit=True,
+            status="1",
+            duration="60",
+            subscription="False",
+            call="True"
+        )
+        response = activity_detail(request, pk=activity.pk)
+        self.assertEqual(response.status_code, 200)
 
 # class TestUserRedirectView(BaseUserTestCase):
 
