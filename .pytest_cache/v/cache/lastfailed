@@ -4,7 +4,7 @@
   "lacos_api/general/tests/test_admin.py::TestMyUserCreationForm::test_sample": true,
   "lacos_api/general/tests/test_models.py::TestUser::test__str__": true,
   "lacos_api/general/tests/test_models.py::TestUser::test_get_absolute_url": true,
-  "lacos_api/general/tests/test_models.py::TestUserProfile::test_constraint": true,
+  "lacos_api/general/tests/test_urls.py::TestActivityURLs::test_create_activity": true,
   "lacos_api/general/tests/test_urls.py::TestUserURLs::test_detail_resolve": true,
   "lacos_api/general/tests/test_urls.py::TestUserURLs::test_detail_reverse": true,
   "lacos_api/general/tests/test_urls.py::TestUserURLs::test_list_resolve": true,
