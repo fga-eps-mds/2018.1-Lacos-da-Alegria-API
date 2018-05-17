@@ -131,4 +131,4 @@ class Activity(models.Model):
     duration = models.IntegerField()
     subscription = models.BooleanField(default=False)
     call = models.BooleanField(default=False)
-    institution = models.BooleanField() # True equals hospital; False equals ONG
+    institution = models.BooleanField(default=True)  # True equals hospital; False equals ONG
