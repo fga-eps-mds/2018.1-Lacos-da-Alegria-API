@@ -1,4 +1,4 @@
-
+import datetime
 from rest_framework import  filters, status, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -29,8 +29,12 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         user_pk = pk
         activity_pk = request.query_params.get('activity_key', None)
 
+        monday, tuesday = 5, 6
+        allowed_days = [monday, tuesday]
+        today = datetime.date.today()
+
         response = None
-        if activity_pk is not None:
+        if activity_pk is not None and today in allowed_days:
             user = self.queryset.get(pk=user_pk)
 
             try:
@@ -40,6 +44,8 @@ class UserProfileViewSet(viewsets.ModelViewSet):
                 response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
             except models.Activity.DoesNotExist:
                 response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
+        elif today not in allowed_days:
+            response = Response({'status': 'Not allowed date'}, status.HTTP_403_FORBIDDEN)
 
         else:
             response = Response({'status': 'Missing activity_pk param'}, status.HTTP_400_BAD_REQUEST)
