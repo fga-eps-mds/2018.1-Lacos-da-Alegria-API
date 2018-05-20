@@ -1,4 +1,4 @@
-import datetime
+from django.utils import timezone
 from rest_framework import  filters, status, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from . import serializers
 from . import models
 from . import permissions
-
+from .models import Activity
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     """Handles creating, creating and updating profiles."""
@@ -31,11 +31,14 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
         monday, tuesday = 5, 6
         allowed_days = [monday, tuesday]
-        today = datetime.date.today()
+        today = timezone.localdate()
 
         response = None
-        if activity_pk is not None and today in allowed_days:
+
+        if activity_pk is not None and today.weekday() in allowed_days:
             user = self.queryset.get(pk=user_pk)
+
+            # if (datetime.now().astimezone(timezone(timedelta(hours=-3) - activity.schedule > timedelta(hours=2))
 
             try:
                 activity = models.Activity.objects.get(pk=activity_pk)
@@ -44,7 +47,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
                 response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
             except models.Activity.DoesNotExist:
                 response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
-        elif today not in allowed_days:
+        elif today.weekday() not in allowed_days:
             response = Response({'status': 'Not allowed date'}, status.HTTP_403_FORBIDDEN)
 
         else:

@@ -66,4 +66,5 @@ class ActivitySerializer(serializers.ModelSerializer):
             'duration',
             'subscription',
             'call',
+			'schedule'
         ]
