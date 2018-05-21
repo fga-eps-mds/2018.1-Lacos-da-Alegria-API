@@ -187,6 +187,6 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
         serializer.save(user_profile=self.request.user)
 
 
-class ActivityViewSet(viewsets.ModelViewSet):
+class HospitalActivityViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ActivitySerializer
     queryset = models.Activity.objects.all()

@@ -1,10 +1,4 @@
 {
-  "lacos_api/general/test_activity/test_admin.py::TestMyUserCreationForm::test_succint_raises": true,
-  "lacos_api/general/test_activity/test_models.py::TestActivity::test_create_activity": true,
-  "lacos_api/general/test_activity/test_urls.py::TestActivityURLs::test_create_activity_1": true,
-  "lacos_api/general/test_activity/test_urls.py::TestActivityURLs::test_create_activity_2": true,
-  "lacos_api/general/test_activity/test_urls.py::TestActivityURLs::test_detail_activity": true,
-  "lacos_api/general/test_activity/test_views.py::ActivityTestView::test_activity_viewset": true,
   "lacos_api/general/tests/test_admin.py::TestMyUserCreationForm::test_clean_username_success": true,
   "lacos_api/general/tests/test_admin.py::TestMyUserCreationForm::test_func_fast": true,
   "lacos_api/general/tests/test_admin.py::TestMyUserCreationForm::test_sample": true,

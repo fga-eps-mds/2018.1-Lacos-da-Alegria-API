@@ -68,7 +68,7 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer):
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
-class ActivitySerializer(serializers.ModelSerializer):
+class HospitalActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Activity
         fields = [
@@ -81,6 +81,5 @@ class ActivitySerializer(serializers.ModelSerializer):
             'time',
             'duration',
             'subscription',
-            'call',
-            'institution'
+            'call'
         ]

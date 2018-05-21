@@ -121,7 +121,7 @@ class ProfileFeedItem(models.Model):
         return self.status_text
 
 
-class Activity(models.Model):
+class HospitalActivity(models.Model):
     name = models.CharField(max_length=60)
     volunteers = models.IntegerField()
     limit = models.BooleanField(default=False)
@@ -131,4 +131,3 @@ class Activity(models.Model):
     duration = models.IntegerField()
     subscription = models.BooleanField(default=False)
     call = models.BooleanField(default=False)
-    institution = models.BooleanField(default=True)  # True equals hospital; False equals ONG

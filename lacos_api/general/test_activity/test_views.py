@@ -26,8 +26,7 @@ class ActivityTestView(TestCase):
             status="1",
             duration="60",
             subscription="False",
-            call="True",
-            institution="True"
+            call="True"
         )
         response = activity_detail(request, pk=activity.pk)
         self.assertEqual(response.status_code, 200)
