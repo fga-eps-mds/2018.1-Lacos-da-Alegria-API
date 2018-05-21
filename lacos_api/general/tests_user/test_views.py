@@ -23,7 +23,7 @@ class UserProfileTestView(TestCase):
                                           password="12345abc", email="testeeee@teste.com", cpf="246966600",
                                           name="zecapagodinho", birth="2018-04-26", region="cataratas",
                                           preference="deus", ddd="11", whatsapp="40028922", address="casa",
-                                          howDidYouKnow="pericles", want_ongs="True")
+                                          howDidYouKnow="pericles", want_ongs="True", activities=" ")
         response = user_detail(request, pk=user.pk)
         self.assertEqual(response.status_code, 200)
 
@@ -43,7 +43,8 @@ class UserProfileTestView(TestCase):
                 'whatsapp': '40028922',
                 'address': 'casa',
                 'howDidYouKnow': 'pericles',
-                'want_ongs': 'True'
+                'want_ongs': 'True',
+                'activities': ' '
             }
             self.invalid_payload = {
                 'username': '',
@@ -58,7 +59,8 @@ class UserProfileTestView(TestCase):
                 'whatsapp': '40028922',
                 'address': 'casa',
                 'howDidYouKnow': 'pericles',
-                'want_ongs': 'True'
+                'want_ongs': 'True',
+                'activities': '1'
             }
 
         def test_create_valid_user(self):
