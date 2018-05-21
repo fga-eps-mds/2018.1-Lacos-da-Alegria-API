@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.utils import timezone
 from rest_framework import  filters, status, viewsets
 from rest_framework.views import APIView
@@ -28,25 +29,29 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     def relate_with_activity(self, request, pk=None):
         user_pk = pk
         activity_pk = request.query_params.get('activity_key', None)
+        activity = models.Activity.objects.get(pk=activity_pk)
 
-        monday, tuesday = 5, 6
+        monday, tuesday = 0, 1
         allowed_days = [monday, tuesday]
         today = timezone.localdate()
+        difference = timezone.localtime(activity.schedule) - timezone.localtime(timezone.now())
 
         response = None
 
         if activity_pk is not None and today.weekday() in allowed_days:
             user = self.queryset.get(pk=user_pk)
 
-            # if (datetime.now().astimezone(timezone(timedelta(hours=-3) - activity.schedule > timedelta(hours=2))
+            if difference > timedelta(hours=2):
+                try:
+                    user.activities.add(activity)
 
-            try:
-                activity = models.Activity.objects.get(pk=activity_pk)
-                user.activities.add(activity)
+                    response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
+                except models.Activity.DoesNotExist:
+                    response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
 
-                response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
-            except models.Activity.DoesNotExist:
-                response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
+            else:
+                response = Response({'status': 'Not allowed time'}, status.HTTP_403_FORBIDDEN)
+
         elif today.weekday() not in allowed_days:
             response = Response({'status': 'Not allowed date'}, status.HTTP_403_FORBIDDEN)
 
@@ -57,7 +62,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
 
 class LoginViewSet(viewsets.ViewSet):
-    """Checks email and password and returns an auth token."""
+    """"Checks email and password and returns an auth token."""
 
     serializer_class = AuthTokenSerializer
 
