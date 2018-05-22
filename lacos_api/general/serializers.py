@@ -83,3 +83,19 @@ class HospitalActivitySerializer(serializers.ModelSerializer):
             'subscription',
             'call'
         ]
+
+class NGOActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.NGOActivity
+        fields = [
+            'id',
+            'name',
+            'volunteers',
+            'limit',
+            'created',
+            'status',
+            'time',
+            'duration',
+            'subscription',
+            'call'
+        ]

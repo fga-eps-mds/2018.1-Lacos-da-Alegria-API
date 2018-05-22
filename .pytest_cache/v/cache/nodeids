@@ -1,8 +1,21 @@
 [
-  "lacos_api/general/test_activity/test_admin.py::TestMyUserCreationForm::test_succint_raises",
-  "lacos_api/general/test_activity/test_models.py::TestActivity::test_create_activity",
-  "lacos_api/general/test_activity/test_urls.py::TestActivityURLs::test_create_activity_1",
-  "lacos_api/general/test_activity/test_urls.py::TestActivityURLs::test_create_activity_2",
-  "lacos_api/general/test_activity/test_urls.py::TestActivityURLs::test_detail_activity",
-  "lacos_api/general/test_activity/test_views.py::ActivityTestView::test_activity_viewset"
+  "lacos_api/general/test_hospital_activity/test_admin.py::TestMyUserCreationForm::test_succint_raises",
+  "lacos_api/general/test_hospital_activity/test_models.py::TestHospitalActivity::test_create_activity",
+  "lacos_api/general/test_hospital_activity/test_urls.py::TestHospitalActivityURLs::test_create_activity_1",
+  "lacos_api/general/test_hospital_activity/test_urls.py::TestHospitalActivityURLs::test_create_activity_2",
+  "lacos_api/general/test_hospital_activity/test_urls.py::TestHospitalActivityURLs::test_detail_activity",
+  "lacos_api/general/test_hospital_activity/test_views.py::HospitalActivityTestView::test_activity_viewset",
+  "lacos_api/general/test_ngo_activity/test_admin.py::TestMyUserCreationForm::test_succint_raises",
+  "lacos_api/general/test_ngo_activity/test_models.py::TestNGOActivity::test_create_activity",
+  "lacos_api/general/test_ngo_activity/test_urls.py::TestNGOActivityURLs::test_create_activity_1",
+  "lacos_api/general/test_ngo_activity/test_urls.py::TestNGOActivityURLs::test_create_activity_2",
+  "lacos_api/general/test_ngo_activity/test_urls.py::TestNGOActivityURLs::test_detail_activity",
+  "lacos_api/general/test_ngo_activity/test_views.py::NGOActivityTestView::test_activity_viewset",
+  "lacos_api/general/tests_user/test_admin.py::TestMyUserCreationForm::test_succint_raises",
+  "lacos_api/general/tests_user/test_models.py::TestUserProfile::test_create_user",
+  "lacos_api/general/tests_user/test_urls.py::TestUserURLs::test_create_user_1",
+  "lacos_api/general/tests_user/test_urls.py::TestUserURLs::test_create_user_2",
+  "lacos_api/general/tests_user/test_urls.py::TestUserURLs::test_detail_user",
+  "lacos_api/general/tests_user/test_views.py::UserProfileTestView::test_user_viewset",
+  "lacos_api/general/tests_user/test_views.py::UserProfileTestView::test_user_viewset_Post"
 ]

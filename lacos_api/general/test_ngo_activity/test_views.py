@@ -1,8 +1,8 @@
 from django.test import RequestFactory
-from ..models import Activity
+from ..models import NGOActivity
 from rest_framework.test import APIRequestFactory
 from test_plus.test import TestCase
-from ..views import ActivityViewSet
+from ..views import NGOActivityViewSet
 
 # from ..views import (UserRedirectView, UserUpdateView)
 
@@ -14,12 +14,12 @@ class BaseUserTestCase(TestCase):
         self.factory = RequestFactory()
 
 
-class ActivityTestView(TestCase):
+class NGOActivityTestView(TestCase):
     # Should create activity view
     def test_activity_viewset(self):
         request = APIRequestFactory().get("")
-        activity_detail = ActivityViewSet.as_view({'get': 'retrieve'})
-        activity = Activity.objects.create(
+        activity_detail = NGOActivityViewSet.as_view({'get': 'retrieve'})
+        activity = NGOActivity.objects.create(
             name="hospGama",
             volunteers="30",
             limit=True,

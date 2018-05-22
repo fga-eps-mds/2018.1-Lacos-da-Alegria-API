@@ -4,5 +4,6 @@ from . import models
 
 # Register your models here.
 admin.site.register(models.HospitalActivity)
+admin.site.register(models.NGOActivity)
 admin.site.register(models.UserProfile)
 admin.site.register(models.ProfileFeedItem)

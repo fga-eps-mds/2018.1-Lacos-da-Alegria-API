@@ -3,7 +3,7 @@
 from test_plus.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
-from ..models import Activity
+from ..models import NGOActivity
 
 
 class TestUserURLs(TestCase):
@@ -13,13 +13,13 @@ class TestUserURLs(TestCase):
         self.user = self.make_user()
 
 
-class TestActivityURLs(APITestCase):
+class TestNGOActivityURLs(APITestCase):
 
     def test_create_activity_1(self):
         """Ensure we are can't create an activity with invalid fields"""
         client = APIClient()
         response = client.post(
-            'http://localhost:8000/api/activities/',
+            'http://localhost:8000/api/ngo_activities/',
             {
                 'name': 'hospGama',
                 'volunteers': '30'
@@ -31,7 +31,7 @@ class TestActivityURLs(APITestCase):
     def test_create_activity_2(self):
         """Ensure we can create an activity with valid fields"""
         response = self.client.post(
-            'http://localhost:8000/api/activities/',
+            'http://localhost:8000/api/ngo_activities/',
             {
                 'name': 'hospGama',
                 'volunteers': '30',
@@ -44,13 +44,13 @@ class TestActivityURLs(APITestCase):
             format='json'
         )
         assert response.status_code == 201
-        self.assertEqual(Activity.objects.count(), 1)
-        self.assertEqual(Activity.objects.get().name, 'hospGama')
+        self.assertEqual(NGOActivity.objects.count(), 1)
+        self.assertEqual(NGOActivity.objects.get().name, 'hospGama')
 
     def test_detail_activity(self):
         """Ensure we can see the details of each activity"""
         client = APIClient()
-        response = client.get('http://localhost:8000/api/activities/')
+        response = client.get('http://localhost:8000/api/ngo_activities/')
         assert response.status_code == 200
 
     # def test_list_reverse(self):

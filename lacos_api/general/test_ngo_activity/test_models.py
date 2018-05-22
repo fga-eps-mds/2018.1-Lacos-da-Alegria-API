@@ -1,5 +1,5 @@
 from test_plus.test import TestCase
-from ..models import Activity
+from ..models import NGOActivity
 
 
 class TestUser(TestCase):
@@ -17,10 +17,10 @@ class TestUser(TestCase):
     #     self.assertEqual(self.user.get_absolute_url(), "/profiles/testuser/")
 
 
-class TestActivity(TestCase):
+class TestNGOActivity(TestCase):
     # Should create an Activity Model
     def setUp(self):
-        return Activity.objects.create(
+        return NGOActivity.objects.create(
             name="hospGama",
             volunteers="30",
             limit="True",
