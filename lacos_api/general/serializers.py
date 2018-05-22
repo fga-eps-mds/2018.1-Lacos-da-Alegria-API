@@ -70,7 +70,7 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer):
 
 class HospitalActivitySerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Activity
+        model = models.HospitalActivity
         fields = [
             'id',
             'name',

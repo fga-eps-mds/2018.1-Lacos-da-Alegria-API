@@ -188,5 +188,5 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
 
 
 class HospitalActivityViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.ActivitySerializer
-    queryset = models.Activity.objects.all()
+    serializer_class = serializers.HospitalActivitySerializer
+    queryset = models.HospitalActivity.objects.all()
