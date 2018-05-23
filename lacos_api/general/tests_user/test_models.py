@@ -19,8 +19,7 @@ class TestUserProfile(TestCase):
             whatsapp="40028922",
             address="casa",
             howDidYouKnow="pericles",
-            want_ongs="True",
-            activities=" ")
+            want_ongs="True",)
         self.assertEqual(user1.username, "ZecaPagodinho")
         self.assertEqual(user1.password, "12345abc")
         self.assertEqual(user1.email, "testeeee@teste.com")
@@ -33,4 +32,3 @@ class TestUserProfile(TestCase):
         self.assertEqual(user1.address, "casa")
         self.assertEqual(user1.howDidYouKnow, "pericles")
         self.assertEqual(user1.want_ongs, "True")
-        self.assertEqual(user1.activities, " ")

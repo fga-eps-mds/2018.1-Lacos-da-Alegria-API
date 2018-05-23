@@ -98,7 +98,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     # promoted = models.BooleanField(default=False)
     # voluntary_hours = models.IntegerField()
     # created = models.DateField()
-    activities = models.ManyToManyField(Activity)
+    activities = models.ManyToManyField(Activity, blank=True)
 
     objects = UserProfileManager()
 
