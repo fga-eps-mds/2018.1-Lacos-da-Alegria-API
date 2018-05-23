@@ -42,11 +42,12 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
             if difference > timedelta(hours=2):
                 for i in user.activities.all():
-                    if activity.schedule < (i.schedule + timedelta(minutes=i.duration))and activity.schedule > i.schedule:
+                    if activity.schedule < i.schedule and end_activity > i.schedule:
                         response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
 
-                    if end_activity < (i.schedule + timedelta(minutes=i.duration)) and end_activity > i.schedule:
+                    if activity.schedule > i.schedule and end_activity > (i.schedule + timedelta(minutes=i.duration)):
                         response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
+
                     if activity.schedule == i.schedule:
                         response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
 
