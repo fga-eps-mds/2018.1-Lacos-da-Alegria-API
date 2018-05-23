@@ -60,6 +60,7 @@ class UserProfileManager(BaseUserManager):
 
         return user
 
+
 class Activity(models.Model):
 
     name = models.CharField(max_length=60)
@@ -72,6 +73,7 @@ class Activity(models.Model):
     subscription = models.BooleanField(default=False)
     call = models.BooleanField(default=False)
     schedule = models.DateTimeField(auto_now_add=False)
+
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Respents a "user profile" inside our system."""

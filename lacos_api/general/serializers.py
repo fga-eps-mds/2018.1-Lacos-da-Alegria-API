@@ -52,6 +52,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         return user
 
+
 class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Activity
@@ -66,5 +67,5 @@ class ActivitySerializer(serializers.ModelSerializer):
             'duration',
             'subscription',
             'call',
-			'schedule'
+            'schedule'
         ]
