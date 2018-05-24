@@ -92,21 +92,6 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['password']
 
-    def get_full_name(self):
-        """Used to get a users full name."""
-
-        return self.name
-
-    def get_short_name(self):
-        """Used to get a users short name."""
-
-        return self.name
-
-    def __str__(self):
-        """Django uses this when it needs to convert the object to a string"""
-
-        return self.email
-
 
 class ProfileFeedItem(models.Model):
     """Profile status update."""
