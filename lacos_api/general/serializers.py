@@ -84,6 +84,7 @@ class HospitalActivitySerializer(serializers.ModelSerializer):
             'call'
         ]
 
+
 class NGOActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.NGOActivity

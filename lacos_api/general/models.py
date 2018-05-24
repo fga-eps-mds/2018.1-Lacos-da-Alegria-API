@@ -132,6 +132,7 @@ class HospitalActivity(models.Model):
     subscription = models.BooleanField(default=False)
     call = models.BooleanField(default=False)
 
+
 class NGOActivity(models.Model):
     name = models.CharField(max_length=60)
     volunteers = models.IntegerField()
