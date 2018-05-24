@@ -3,13 +3,6 @@ from rest_framework import serializers
 from . import models
 
 
-class HelloSerializer(serializers.Serializer):
-    """Serializes a name field for testing our APIView."""
-
-    name = serializers.CharField(max_length=10)
-    address = serializers.CharField(min_length=3)
-
-
 class UserProfileSerializer(serializers.ModelSerializer):
     """A serializer for our user profile objects."""
 
