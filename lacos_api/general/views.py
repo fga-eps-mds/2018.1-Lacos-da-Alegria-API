@@ -28,38 +28,45 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         activity_pk = request.query_params.get('activity_key', None)
         activity = models.Activity.objects.get(pk=activity_pk)
 
-        monday, tuesday = 5, 6
+        monday, tuesday = 4, 6
         allowed_days = [monday, tuesday]
         today = timezone.localdate()
         activity_time = timezone.localtime(activity.schedule)
         difference = activity_time - timezone.localtime(timezone.now())
         end_activity = activity.schedule + timedelta(minutes=activity.duration)
-
+        
         response = None
 
         if activity_pk is not None and today.weekday() in allowed_days:
             user = self.queryset.get(pk=user_pk)
 
             if difference > timedelta(hours=2):
-                for i in user.activities.all():
-                    if activity.schedule < i.schedule and end_activity > i.schedule:
-                        response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
+                if user.activities.count() != 0:
+                    for i in user.activities.all():
+                        if activity.schedule > i.schedule and activity.schedule < (i.schedule + timedelta(minutes=i.duration)):
+                            response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
 
-                    if activity.schedule > i.schedule and end_activity > (i.schedule + timedelta(minutes=i.duration)):
-                        response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
+                        elif end_activity > i.schedule and end_activity < (i.schedule + timedelta(minutes=i.duration)):
+                            response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
 
-                    if activity.schedule == i.schedule:
-                        response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
+                        elif activity.schedule == i.schedule:
+                            response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
 
-                    else:
-                        try:
-                            user.activities.add(activity)
+                        else:
+                            try:
+                                user.activities.add(activity)
 
-                            response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
-                        except models.Activity.DoesNotExist:
-                            response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
+                                response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
+                            except models.Activity.DoesNotExist:
+                                response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
+                else:
+                    try:
+                        user.activities.add(activity)
 
-            else:
+                        response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
+                    except models.Activity.DoesNotExist:
+                        response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
+            else:   
                 response = Response({'status': 'Not allowed time'}, status.HTTP_403_FORBIDDEN)
 
         elif today.weekday() not in allowed_days:
