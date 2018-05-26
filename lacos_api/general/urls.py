@@ -3,15 +3,16 @@ from django.conf.urls import include
 
 from rest_framework.routers import DefaultRouter
 
-from . import views
+from ..user_api import views as userViews
+from ..activity_api import views as activityView
 
 router = DefaultRouter()
-router.register('profile', views.UserProfileViewSet)
-router.register('login', views.LoginViewSet, base_name='login')
-router.register('feed', views.UserProfileFeedViewSet)
-router.register('activities', views.ActivityViewSet)
+router.register('profile', userViews.UserProfileViewSet)
+router.register('login', userViews.LoginViewSet, base_name='login')
+router.register('feed', userViews.UserProfileFeedViewSet)
+router.register('activities', activityView.ActivityViewSet)
 
 urlpatterns = [
-    url(r'^userprofile-view', views.UserProfileView.as_view()),
+    url(r'^userprofile-view', userViews.UserProfileView.as_view()),
     url(r'', include(router.urls))
 ]

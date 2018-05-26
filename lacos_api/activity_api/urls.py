@@ -5,10 +5,12 @@ from rest_framework.routers import DefaultRouter
 
 from . import views
 
-router = DefaultRouter()
-router.register('activities', views.ActivityViewSet)
+app_name = 'activity'
 
 urlpatterns = [
-    url(r'^userprofile-view', views.UserProfileView.as_view()),
-    url(r'', include(router.urls))
+    path (
+        '/activity',
+        views.ActivityViewSet.as_view(),
+        name='activity-set'
+    )
 ]

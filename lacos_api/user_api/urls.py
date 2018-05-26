@@ -5,12 +5,23 @@ from rest_framework.routers import DefaultRouter
 
 from . import views
 
-router = DefaultRouter()
-router.register('profile', views.UserProfileViewSet)
-router.register('login', views.LoginViewSet, base_name='login')
-router.register('feed', views.UserProfileFeedViewSet)
+app_name = 'user'
 
 urlpatterns = [
-    url(r'^userprofile-view', views.UserProfileView.as_view()),
-    url(r'', include(router.urls))
+    path (
+        '/user-feed',
+        views.UserProfileFeedViewSet.as_view(),
+        name='user-feed'
+    )
+    path (
+        '/user-view',
+        views.UserProfileView.as_view(),
+        name='user-view'
+    )
+    path (
+        '/user-view-set',
+        views.UserProfileViewSet.as_view(),
+        name='user-view-set'
+    )
 ]
+
