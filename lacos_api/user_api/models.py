@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator, MinValueValidator, MaxValueValidator, EmailValidator
 
 class UserProfileManager(BaseUserManager):
     """Helps Django work with our custom user model."""
@@ -58,22 +59,22 @@ class UserProfileManager(BaseUserManager):
         return user
 
 
-class UserProfile(AbstractBaseUser, PermissionsMixin):
+class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     """Respents a "user profile" inside our system."""
-    username = models.CharField(max_length=255, unique=True)
-    password = models.CharField(max_length=32)
-    email = models.EmailField(max_length=255, unique=True)
-    cpf = models.CharField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
+    username = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(5), MaxLengthValidator(20), RegexValidator(regex='^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$',message='Username must be Alphanumeric',code='invalid_username', flags=None)])
+    password = models.CharField(max_length=32, validators=[MinLengthValidator(6), MaxLengthValidator(32)])
+    email = models.EmailField(max_length=255, unique=True, validators=[EmailValidator()])
+    cpf = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(11), MaxLengthValidator(11)])
+    name = models.CharField(max_length=255, validators=[MinLengthValidator(3), MaxLengthValidator(50), RegexValidator(regex='^[a-zA-Z]+([ ]?[a-zA-Z])*$')])
     # doctor_name = models.CharField(max_length=255)
     birth = models.DateField()
-    region = models.CharField(max_length=30)
-    preference = models.CharField(max_length=255)
-    ddd = models.IntegerField()
-    whatsapp = models.CharField(max_length=255)
+    region = models.CharField(max_length=30, validators=[MaxLengthValidator(30)])
+    preference = models.CharField(max_length=255, validators=[MaxLengthValidator(40)])
+    ddd = models.IntegerField(validators=[MinValueValidator(11), MaxValueValidator(99), RegexValidator(regex='((([1,4,6,8,9][1-9])|(2[1,2,4,7,8])|(3[1-8])|(4[1-9])|(5[1-5])|(7[1,3,4,5,7,9])))')])
+    whatsapp = models.CharField(max_length=255, validators=[MinLengthValidator(8), MaxLengthValidator(9)])
     # participate = models.BooleanField()
-    address = models.CharField(max_length=255)
-    genre = models.CharField(max_length=255)
+    address = models.CharField(max_length=255, validators=[MinLengthValidator(5), MaxLengthValidator(80)])
+    genre = models.CharField(max_length=255, validators=[MaxLengthValidator(20)])
     howDidYouKnow = models.CharField(max_length=255)
     # status = models.IntegerField()
     # profile = models.CharField(max_length=255)
