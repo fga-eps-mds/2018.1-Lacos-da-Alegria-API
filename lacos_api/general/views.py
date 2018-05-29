@@ -28,7 +28,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         activity_pk = request.query_params.get('activity_key', None)
         activity = models.Activity.objects.get(pk=activity_pk)
 
-        monday, tuesday = 4, 6
+        monday, tuesday = 0, 1 
         allowed_days = [monday, tuesday]
         today = timezone.localdate()
         activity_time = timezone.localtime(activity.schedule)
