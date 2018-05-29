@@ -3,13 +3,6 @@ from rest_framework import serializers
 from . import models
 
 
-class HelloSerializer(serializers.Serializer):
-    """Serializes a name field for testing our APIView."""
-
-    name = serializers.CharField(max_length=10)
-    address = serializers.CharField(min_length=3)
-
-
 class UserProfileSerializer(serializers.ModelSerializer):
     """A serializer for our user profile objects."""
 
@@ -30,7 +23,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'want_ongs',
             'ddd',
             'whatsapp',
-            'genre'
+            'genre',
+            'activities'
         )
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -50,22 +44,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
             want_ongs=validated_data['want_ongs'],
             ddd=validated_data['ddd'],
             whatsapp=validated_data['whatsapp'],
-            genre=validated_data['genre']
+            genre=validated_data['genre'],
         )
 
         user.set_password(validated_data['password'])
         user.save()
 
         return user
-
-
-class ProfileFeedItemSerializer(serializers.ModelSerializer):
-    """A serializer for profile feed items."""
-
-    class Meta:
-        model = models.ProfileFeedItem
-        fields = ('id', 'user_profile', 'status_text', 'created_on')
-        extra_kwargs = {'user_profile': {'read_only': True}}
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -81,5 +66,6 @@ class ActivitySerializer(serializers.ModelSerializer):
             'time',
             'duration',
             'subscription',
-            'call'
+            'call',
+            'schedule'
         ]

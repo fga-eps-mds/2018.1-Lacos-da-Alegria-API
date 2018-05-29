@@ -43,7 +43,7 @@ class UserProfileTestView(TestCase):
                 'whatsapp': '40028922',
                 'address': 'casa',
                 'howDidYouKnow': 'pericles',
-                'want_ongs': 'True'
+                'want_ongs': 'True',
             }
             self.invalid_payload = {
                 'username': '',
@@ -58,7 +58,7 @@ class UserProfileTestView(TestCase):
                 'whatsapp': '40028922',
                 'address': 'casa',
                 'howDidYouKnow': 'pericles',
-                'want_ongs': 'True'
+                'want_ongs': 'True',
             }
 
         def test_create_valid_user(self):

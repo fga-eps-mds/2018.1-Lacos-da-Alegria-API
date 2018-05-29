@@ -3,8 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 
-# Create your models here.
-
 
 class UserProfileManager(BaseUserManager):
     """Helps Django work with our custom user model."""
@@ -63,6 +61,20 @@ class UserProfileManager(BaseUserManager):
         return user
 
 
+class Activity(models.Model):
+
+    name = models.CharField(max_length=60)
+    volunteers = models.IntegerField()
+    limit = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    status = models.IntegerField()
+    time = models.DateTimeField(auto_now_add=True)
+    duration = models.IntegerField()
+    subscription = models.BooleanField(default=False)
+    call = models.BooleanField(default=False)
+    schedule = models.DateTimeField(auto_now_add=False)
+
+
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Respents a "user profile" inside our system."""
     username = models.CharField(max_length=255, unique=True)
@@ -86,6 +98,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     # promoted = models.BooleanField(default=False)
     # voluntary_hours = models.IntegerField()
     # created = models.DateField()
+    activities = models.ManyToManyField(Activity, blank=True)
 
     objects = UserProfileManager()
 
@@ -106,28 +119,3 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         """Django uses this when it needs to convert the object to a string"""
 
         return self.email
-
-
-class ProfileFeedItem(models.Model):
-    """Profile status update."""
-
-    user_profile = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
-    status_text = models.CharField(max_length=255)
-    created_on = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        """Return the model as a string."""
-
-        return self.status_text
-
-
-class Activity(models.Model):
-    name = models.CharField(max_length=60)
-    volunteers = models.IntegerField()
-    limit = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True)
-    status = models.IntegerField()
-    time = models.DateTimeField(auto_now_add=True)
-    duration = models.IntegerField()
-    subscription = models.BooleanField(default=False)
-    call = models.BooleanField(default=False)
