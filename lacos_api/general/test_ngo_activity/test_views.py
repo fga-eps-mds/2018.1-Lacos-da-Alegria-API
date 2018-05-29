@@ -26,7 +26,8 @@ class NGOActivityTestView(TestCase):
             status="1",
             duration="60",
             subscription="False",
-            call="True"
+            call="True",
+            schedule="2018-07-30T15:30:02-03:00"
         )
         response = activity_detail(request, pk=activity.pk)
         self.assertEqual(response.status_code, 200)

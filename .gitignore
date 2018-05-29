@@ -292,3 +292,4 @@ lacos_api/media/
 .env
 .envs/*
 !.envs/.local/
+

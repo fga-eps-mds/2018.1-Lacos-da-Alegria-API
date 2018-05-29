@@ -6,4 +6,3 @@ from . import models
 admin.site.register(models.HospitalActivity)
 admin.site.register(models.NGOActivity)
 admin.site.register(models.UserProfile)
-admin.site.register(models.ProfileFeedItem)
