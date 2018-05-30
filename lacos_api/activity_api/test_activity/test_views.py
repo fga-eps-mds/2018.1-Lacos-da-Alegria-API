@@ -2,7 +2,7 @@ from django.test import RequestFactory
 from ..models import Activity
 from rest_framework.test import APIRequestFactory
 from test_plus.test import TestCase
-from ..views import ActivityViewSet
+from lacos_api.activity_api.views import ActivityViewSet
 
 # from ..views import (UserRedirectView, UserUpdateView)
 
