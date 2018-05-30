@@ -66,9 +66,9 @@ class UserProfileManager(BaseUserManager):
 class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     """Respents a "user profile" inside our system."""
     username = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(5), MaxLengthValidator(20),
-                                RegexValidator(regex='^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$',
-                                message='Username must be Alphanumeric', code='invalid_username', flags=None)])
-    password = models.CharField(max_length=32, validators=[MinLengthValidator(6), MaxLengthValidator(32)])
+                                RegexValidator(regex='^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$')])
+    password = models.CharField(max_length=32, validators=[MinLengthValidator(6), MaxLengthValidator(32), 
+                                RegexValidator(regex='^[a-zA-Z0-9]*$')])
     email = models.EmailField(max_length=255, unique=True, validators=[EmailValidator()])
     cpf = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(11), MaxLengthValidator(11)])
     name = models.CharField(max_length=255, validators=[MinLengthValidator(3), MaxLengthValidator(50),
@@ -78,7 +78,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     region = models.CharField(max_length=30, validators=[MaxLengthValidator(30)])
     preference = models.CharField(max_length=255, validators=[MaxLengthValidator(40)])
     ddd = models.IntegerField(validators=[MinValueValidator(10), MaxValueValidator(99), RegexValidator(
-                              regex='((([2,4,6,8,9][1-9])|(2[1,2,4,7,8])|(3[1-8])|(4[1-9])|(5[1-5])|(7[1,3,4,5,7,9])))'
+                              regex='^((([1,4,6,8,9][1-9])|(2[1,2,4,7,8])|(3[1-8])|(4[1-9])|(5[1-5])|(7[1,3,4,5,7,9])))*$'
                               )])
     whatsapp = models.CharField(max_length=255, validators=[MinLengthValidator(8), MaxLengthValidator(9)])
     # participate = models.BooleanField()
