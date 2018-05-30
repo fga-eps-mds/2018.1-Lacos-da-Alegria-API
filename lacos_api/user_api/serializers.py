@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from . import models
 
-
 class UserProfileSerializer(serializers.ModelSerializer):
     """A serializer for our user profile objects."""
 
@@ -44,28 +43,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
             want_ongs=validated_data['want_ongs'],
             ddd=validated_data['ddd'],
             whatsapp=validated_data['whatsapp'],
-            genre=validated_data['genre'],
+            genre=validated_data['genre']
         )
 
         user.set_password(validated_data['password'])
         user.save()
 
         return user
-
-
-class ActivitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Activity
-        fields = [
-            'id',
-            'name',
-            'volunteers',
-            'limit',
-            'created',
-            'status',
-            'time',
-            'duration',
-            'subscription',
-            'call',
-            'schedule'
-        ]

@@ -1,15 +1,12 @@
-from datetime import timedelta
-from django.utils import timezone
-from rest_framework import filters, status, viewsets
+from rest_framework import viewsets, status, filters
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 
-from . import serializers
-from . import models
-from . import permissions
+from . import serializers, models, permissions
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -79,7 +76,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
 
 class LoginViewSet(viewsets.ViewSet):
-    """"Checks email and password and returns an auth token."""
+    """Checks email and password and returns an auth token."""
 
     serializer_class = AuthTokenSerializer
 
@@ -87,8 +84,3 @@ class LoginViewSet(viewsets.ViewSet):
         """Use the ObtainAuthToken APIView to validate and create a token."""
 
         return ObtainAuthToken().post(request)
-
-
-class ActivityViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.ActivitySerializer
-    queryset = models.Activity.objects.all()
