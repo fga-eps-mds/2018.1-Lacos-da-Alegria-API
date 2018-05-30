@@ -1,11 +1,7 @@
 from . import views
 
-app_name = 'user'
-
 urlpatterns = [
-    path(
-        '/user',
+    url(r'^user/$',
         views.UserProfileViewSet.as_view(),
-        name='user'
-    )
+        name='user-set')
 ]
