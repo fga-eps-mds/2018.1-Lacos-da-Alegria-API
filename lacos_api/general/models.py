@@ -119,7 +119,6 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         """Django uses this when it needs to convert the object to a string"""
 
         return self.email
-<<<<<<< HEAD
 
 
 class ProfileFeedItem(models.Model):
@@ -157,5 +156,3 @@ class NGOActivity(models.Model):
     duration = models.IntegerField()
     subscription = models.BooleanField(default=False)
     call = models.BooleanField(default=False)
-=======
->>>>>>> ce2b9157237fea28af8afc483c99cd922e84b6c9
