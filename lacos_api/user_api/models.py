@@ -1,9 +1,19 @@
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.validators import (RegexValidator, MinLengthValidator, MaxLengthValidator, MinValueValidator,
                                     MaxValueValidator, EmailValidator)
-
 from lacos_api.activity_api.models import Activity
+
+def validate_genre(value):
+    if (value =="Masculino") or (value =="Feminino"):
+        print("Valid value")
+    
+    else:
+        raise ValidationError(
+            _('Its not valid'),
+            params={'value': value})
 
 
 class UserProfileManager(BaseUserManager):
@@ -83,7 +93,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     whatsapp = models.CharField(max_length=255, validators=[MinLengthValidator(8), MaxLengthValidator(9)])
     # participate = models.BooleanField()
     address = models.CharField(max_length=255, validators=[MinLengthValidator(5), MaxLengthValidator(80)])
-    genre = models.CharField(max_length=255, validators=[MaxLengthValidator(20)])
+    genre = models.CharField(max_length=255, validators=[MaxLengthValidator(20), validate_genre])
     howDidYouKnow = models.CharField(max_length=255)
     # status = models.IntegerField()
     # profile = models.CharField(max_length=255)
