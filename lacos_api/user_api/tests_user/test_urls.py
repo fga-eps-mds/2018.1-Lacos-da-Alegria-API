@@ -25,14 +25,14 @@ class TestUserURLs(TestCase):
             'cpf': '24696660080',
             'name': 'zecapagodinho',
             'birth': '2018-04-26',
-            'region': 'cataratas',
-            'preference': 'deus',
+            'region': 'Águas Claras',
+            'preference': 'Hospital Regional do Gama',
             'ddd': '61',
             'whatsapp': '40028922',
             'address': 'casa1',
-            'howDidYouKnow': 'pericles',
+            'howDidYouKnow': 'Outros',
             'want_ongs': 'True',
-            'genre': 'M'
+            'genre': 'Masculino'
         },
             format='json'
         )
