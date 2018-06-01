@@ -28,7 +28,8 @@ class UserProfileManager(BaseUserManager):
             want_ongs=want_ongs,
             ddd=ddd,
             whatsapp=whatsapp,
-            genre=genre
+            genre=genre,
+            role=role
         )
 
         user.set_password(password)
@@ -52,7 +53,8 @@ class UserProfileManager(BaseUserManager):
             want_ongs,
             ddd,
             whatsapp,
-            genre
+            genre,
+            role
         )
 
         # user.is_superuser = True
@@ -92,6 +94,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     # voluntary_hours = models.IntegerField()
     # created = models.DateField()
     activities = models.ManyToManyField(Activity, blank=True)
+    role = models.CharField(max_length=255, default='Novato')
 
     objects = UserProfileManager()
 
