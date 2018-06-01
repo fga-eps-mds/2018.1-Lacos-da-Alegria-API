@@ -85,6 +85,8 @@ LOCAL_APPS = [
     # 'lacos_api.users.apps.UsersConfig',
     # Your stuff: custom apps go here
     'lacos_api.general.apps.GeneralConfig',
+    'lacos_api.user_api.apps.UserApiConfig',
+    'lacos_api.activity_api.apps.ActivityApiConfig',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -104,7 +106,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-AUTH_USER_MODEL = 'general.UserProfile'
+AUTH_USER_MODEL = 'user_api.UserProfile'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 # LOGIN_REDIRECT_URL = 'users:redirect'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
