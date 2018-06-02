@@ -32,7 +32,8 @@ class TestUserURLs(TestCase):
             'address': 'casa1',
             'howDidYouKnow': 'Outros',
             'want_ongs': 'True',
-            'genre': 'Masculino'
+            'genre': 'Masculino',
+            'role': 'Novato',
         },
             format='json'
         )

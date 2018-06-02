@@ -116,7 +116,8 @@ class UserProfileManager(BaseUserManager):
             want_ongs=want_ongs,
             ddd=ddd,
             whatsapp=whatsapp,
-            genre=genre
+            genre=genre,
+            role=role
         )
 
         user.set_password(password)
@@ -140,7 +141,8 @@ class UserProfileManager(BaseUserManager):
             want_ongs,
             ddd,
             whatsapp,
-            genre
+            genre,
+            role
         )
 
         # user.is_superuser = True
@@ -155,8 +157,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     """Respents a "user profile" inside our system."""
     username = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(5), MaxLengthValidator(20),
                                 RegexValidator(regex='^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$')])
-    password = models.CharField(max_length=32, validators=[MinLengthValidator(6), MaxLengthValidator(32),
-                                RegexValidator(regex='^[a-zA-Z0-9]*$')])
+    password = models.CharField(max_length=32, validators=[MinLengthValidator(6), MaxLengthValidator(132),
+                                RegexValidator(regex='^[a-zA-Z0-9]*$')])  # Alterar quando o metodo PUT estiver correto
     email = models.EmailField(max_length=255, unique=True, validators=[EmailValidator()])
     cpf = models.CharField(max_length=255, unique=True, validators=[validate_cpf])
     name = models.CharField(max_length=255, validators=[MinLengthValidator(3), MaxLengthValidator(50),
@@ -180,6 +182,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     # voluntary_hours = models.IntegerField()
     # created = models.DateField()
     activities = models.ManyToManyField(Activity, blank=True)
+    role = models.CharField(max_length=255, default='Novato')
 
     objects = UserProfileManager()
 

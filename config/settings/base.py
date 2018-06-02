@@ -5,6 +5,8 @@ Base settings to build other settings files upon.
 import environ
 import os
 
+from datetime import timedelta
+
 ROOT_DIR = environ.Path(__file__) - 3  # (lacos_api/config/settings/base.py - 3 = lacos_api/)
 APPS_DIR = ROOT_DIR.path('lacos_api')
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,6 +17,31 @@ READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(ROOT_DIR.path('.env')))
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = '^cn5*sm4_zjcfrb38&vv4=9$5d-lg8=yqzx!c0i(ed1vj3!+2o'
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -269,9 +296,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^cn5*sm4_zjcfrb38&vv4=9$5d-lg8=yqzx!c0i(ed1vj3!+2o'
-
 ALLOWED_HOSTS = []
 
 # Installing django rest framework
@@ -292,7 +316,10 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
      ),
-    'DEFAULT_PERMISSION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
