@@ -70,7 +70,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     username = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(5), MaxLengthValidator(20),
                                 RegexValidator(regex='^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$',
                                 message='Username must be Alphanumeric', code='invalid_username', flags=None)])
-    password = models.CharField(max_length=32, validators=[MinLengthValidator(6), MaxLengthValidator(32)])
+    password = models.CharField(max_length=110, validators=[MinLengthValidator(6), MaxLengthValidator(110)])
     email = models.EmailField(max_length=255, unique=True, validators=[EmailValidator()])
     cpf = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(11), MaxLengthValidator(11)])
     name = models.CharField(max_length=255, validators=[MinLengthValidator(3), MaxLengthValidator(50),
