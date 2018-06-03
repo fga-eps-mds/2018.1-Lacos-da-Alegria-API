@@ -19,7 +19,7 @@ class TestNGOActivityURLs(APITestCase):
         """Ensure we are can't create an activity with invalid fields"""
         client = APIClient()
         response = client.post(
-            'http://localhost:8000/api/ngo_activities/',
+            'http://localhost:8000/api/ngo-activities/',
             {
                 'name': 'hospGama',
                 'volunteers': '30'
@@ -31,7 +31,7 @@ class TestNGOActivityURLs(APITestCase):
     def test_create_activity_2(self):
         """Ensure we can create an activity with valid fields"""
         response = self.client.post(
-            'http://localhost:8000/api/ngo_activities/',
+            'http://localhost:8000/api/ngo-activities/',
             {
                 'name': 'hospGama',
                 'volunteers': '30',
@@ -40,7 +40,6 @@ class TestNGOActivityURLs(APITestCase):
                 'duration': '30',
                 'subscription': 'True',
                 'call': 'True',
-                'schedule': '2018-07-30T15:30:02-03:00'
             },
             format='json'
         )
@@ -51,7 +50,7 @@ class TestNGOActivityURLs(APITestCase):
     def test_detail_activity(self):
         """Ensure we can see the details of each activity"""
         client = APIClient()
-        response = client.get('http://localhost:8000/api/ngo_activities/')
+        response = client.get('http://localhost:8000/api/ngo-activities/')
         assert response.status_code == 200
 
     # def test_list_reverse(self):

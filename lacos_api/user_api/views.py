@@ -1,13 +1,10 @@
 from django.utils import timezone
 from datetime import timedelta
-from rest_framework import viewsets, status, filters
+from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import action
 
-from . import serializers, models, permissions
+from . import serializers, models
 from lacos_api.activity_api.models import HospitalActivity
 
 

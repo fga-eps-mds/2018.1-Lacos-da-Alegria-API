@@ -1,7 +1,7 @@
 from . import views
 
-app_name = 'activity'
-
 urlpatterns = [
-    
+    url(r'^activity/$',
+        views.ActivityViewSet.as_view(),
+        name='activity-set')
 ]

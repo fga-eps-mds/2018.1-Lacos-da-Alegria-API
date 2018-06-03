@@ -3,12 +3,13 @@ from rest_framework import serializers
 from . import models
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
     """A serializer for our user profile objects."""
 
     class Meta:
         model = models.UserProfile
         fields = (
+            'url',
             'id',
             'email',
             'name',
@@ -24,9 +25,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'ddd',
             'whatsapp',
             'genre',
-            'activities'
+            'activities',
+            'role'
         )
-        extra_kwargs = {'password': {'write_only': True}}
+        # fields = '__all__'
+        # extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         """Create and return a new user."""
@@ -44,7 +47,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             want_ongs=validated_data['want_ongs'],
             ddd=validated_data['ddd'],
             whatsapp=validated_data['whatsapp'],
-            genre=validated_data['genre']
+            genre=validated_data['genre'],
+            role=validated_data['role']
         )
 
         user.set_password(validated_data['password'])

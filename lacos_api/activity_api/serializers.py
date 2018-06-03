@@ -3,10 +3,11 @@ from rest_framework import serializers
 from . import models
 
 
-class HospitalActivitySerializer(serializers.ModelSerializer):
+class HospitalActivitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.HospitalActivity
         fields = [
+            'url',
             'id',
             'name',
             'volunteers',
@@ -21,7 +22,7 @@ class HospitalActivitySerializer(serializers.ModelSerializer):
         ]
 
 
-class NGOActivitySerializer(serializers.ModelSerializer):
+class NGOActivitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.NGOActivity
         fields = [
