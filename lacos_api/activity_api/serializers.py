@@ -34,6 +34,5 @@ class NGOActivitySerializer(serializers.ModelSerializer):
             'time',
             'duration',
             'subscription',
-            'call',
-            'schedule'
+            'call'
         ]

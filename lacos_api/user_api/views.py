@@ -16,10 +16,10 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.UpdateOwnProfile,)
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('name', 'email',)
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (permissions.UpdateOwnProfile,)
+    # filter_backends = (filters.SearchFilter,)
+    # search_fields = ('name', 'email',)
 
     @action(methods=['get'], detail=True)
     def relate_with_activity(self, request, pk=None):
@@ -75,14 +75,3 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             response = Response({'status': 'Missing activity_pk param'}, status.HTTP_400_BAD_REQUEST)
 
         return response
-
-
-class LoginViewSet(viewsets.ViewSet):
-    """Checks email and password and returns an auth token."""
-
-    serializer_class = AuthTokenSerializer
-
-    def create(self, request):
-        """Use the ObtainAuthToken APIView to validate and create a token."""
-
-        return ObtainAuthToken().post(request)

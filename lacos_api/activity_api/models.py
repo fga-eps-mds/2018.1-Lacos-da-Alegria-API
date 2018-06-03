@@ -11,6 +11,7 @@ class HospitalActivity(models.Model):
     duration = models.IntegerField()
     subscription = models.BooleanField(default=False)
     call = models.BooleanField(default=False)
+    schedule = models.DateTimeField(auto_now_add=False)
 
 
 class NGOActivity(models.Model):
