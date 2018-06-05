@@ -2,12 +2,10 @@ from django.utils import timezone
 from datetime import timedelta
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import action
 
 from . import serializers, models
-from lacos_api.activity_api.models import Activity
+from lacos_api.activity_api.models import HospitalActivity
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -24,7 +22,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     def relate_with_activity(self, request, pk=None):
         user_pk = pk
         activity_pk = request.query_params.get('activity_key', None)
-        activity = Activity.objects.get(pk=activity_pk)
+        activity = HospitalActivity.objects.get(pk=activity_pk)
 
         monday, tuesday = 0, 1
         allowed_days = [monday, tuesday]
@@ -55,14 +53,14 @@ class UserProfileViewSet(viewsets.ModelViewSet):
                                 user.activities.add(activity)
 
                                 response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
-                            except models.Activity.DoesNotExist:
+                            except models.HospitalActivity.DoesNotExist:
                                 response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
                 else:
                     try:
                         user.activities.add(activity)
 
                         response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
-                    except models.Activity.DoesNotExist:
+                    except models.HospitalActivity.DoesNotExist:
                         response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
             else:
                 response = Response({'status': 'Not allowed time'}, status.HTTP_403_FORBIDDEN)
@@ -74,14 +72,3 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             response = Response({'status': 'Missing activity_pk param'}, status.HTTP_400_BAD_REQUEST)
 
         return response
-
-
-class LoginViewSet(viewsets.ViewSet):
-    """Checks email and password and returns an auth token."""
-
-    serializer_class = AuthTokenSerializer
-
-    def create(self, request):
-        """Use the ObtainAuthToken APIView to validate and create a token."""
-
-        return ObtainAuthToken().post(request)

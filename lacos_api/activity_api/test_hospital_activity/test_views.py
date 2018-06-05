@@ -1,8 +1,8 @@
 from django.test import RequestFactory
-from ..models import Activity
+from ..models import HospitalActivity
 from rest_framework.test import APIRequestFactory
 from test_plus.test import TestCase
-from lacos_api.activity_api.views import ActivityViewSet
+from lacos_api.activity_api.views import HospitalActivityViewSet
 
 # from ..views import (UserRedirectView, UserUpdateView)
 
@@ -14,12 +14,12 @@ class BaseUserTestCase(TestCase):
         self.factory = RequestFactory()
 
 
-class ActivityTestView(TestCase):
-    # Should create activity view
+class HospitalActivityTestView(TestCase):
+    # Should create HospitalActivity view
     def test_activity_viewset(self):
         request = APIRequestFactory().get("")
-        activity_detail = ActivityViewSet.as_view({'get': 'retrieve'})
-        activity = Activity.objects.create(
+        activity_detail = HospitalActivityViewSet.as_view({'get': 'retrieve'})
+        activity = HospitalActivity.objects.create(
             name="hospGama",
             volunteers="30",
             limit=True,

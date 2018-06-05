@@ -4,7 +4,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.validators import (RegexValidator, MinLengthValidator, MaxLengthValidator, MinValueValidator,
                                     MaxValueValidator, EmailValidator)
-from lacos_api.activity_api.models import Activity
+
+from lacos_api.activity_api.models import HospitalActivity
 
 
 def validate_genre(value):
@@ -181,7 +182,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     # promoted = models.BooleanField(default=False)
     # voluntary_hours = models.IntegerField()
     # created = models.DateField()
-    activities = models.ManyToManyField(Activity, blank=True)
+    activities = models.ManyToManyField(HospitalActivity, blank=True)
     role = models.CharField(max_length=255, default='Novato')
 
     objects = UserProfileManager()
