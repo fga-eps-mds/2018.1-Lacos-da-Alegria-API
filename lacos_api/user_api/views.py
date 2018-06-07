@@ -9,8 +9,6 @@ from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
-
-
 from . import serializers, models, permissions
 from lacos_api.activity_api.models import Activity
 
@@ -38,7 +36,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         activity_pk = request.query_params.get('activity_key', None)
         activity = Activity.objects.get(pk=activity_pk)
 
-        monday, tuesday = 0, 1
+        monday, tuesday = 0, 4 
         allowed_days = [monday, tuesday]
         today = timezone.localdate()
         activity_time = timezone.localtime(activity.schedule)
@@ -54,33 +52,33 @@ class UserProfileViewSet(viewsets.ModelViewSet):
                     for i in user.activities.all():
                         if (activity.schedule > i.schedule and
                            activity.schedule < (i.schedule + timedelta(minutes=i.duration))):
-                            response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
+                            response = Response({'status': 'Conflito de horário com outra atividade que você está participando!'}, status.HTTP_403_FORBIDDEN)
 
                         elif end_activity > i.schedule and end_activity < (i.schedule + timedelta(minutes=i.duration)):
-                            response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
+                            response = Response({'status': 'Conflito de horário com outra atividade que você está participando!'}, status.HTTP_403_FORBIDDEN)
 
                         elif activity.schedule == i.schedule:
-                            response = Response({'status': 'Clash with other activity'}, status.HTTP_403_FORBIDDEN)
+                            response = Response({'status': 'Conflito de horário com outra atividade que você está participando!'}, status.HTTP_403_FORBIDDEN)
 
                         else:
                             try:
                                 user.activities.add(activity)
 
-                                response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
+                                response = Response({'status': 'Você entrou na pré-lista, aguarde o resultado do sorteio.'}, status.HTTP_200_OK)
                             except models.Activity.DoesNotExist:
-                                response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
+                                response = Response({'status': 'Atividade não encontrada!'}, status.HTTP_404_NOT_FOUND)
                 else:
                     try:
                         user.activities.add(activity)
 
-                        response = Response({'status': 'Created relationship'}, status.HTTP_200_OK)
+                        response = Response({'status': 'Você entrou na pré-lista, aguarde o resultado do sorteio.'}, status.HTTP_200_OK)
                     except models.Activity.DoesNotExist:
-                        response = Response({'status': 'Activity not found'}, status.HTTP_404_NOT_FOUND)
+                        response = Response({'status': 'Atividade não encontrada!'}, status.HTTP_404_NOT_FOUND)
             else:
-                response = Response({'status': 'Not allowed time'}, status.HTTP_403_FORBIDDEN)
+                response = Response({'status': 'Você não pode entrar na pré-lista faltando 2hs ou menos para o início da atividade.'}, status.HTTP_403_FORBIDDEN)
 
         elif today.weekday() not in allowed_days:
-            response = Response({'status': 'Not allowed date'}, status.HTTP_403_FORBIDDEN)
+            response = Response({'status': 'Você pode entrar na pré-lista apenas na segunda ou terça-feira.'}, status.HTTP_403_FORBIDDEN)
 
         else:
             response = Response({'status': 'Missing activity_pk param'}, status.HTTP_400_BAD_REQUEST)
