@@ -18,6 +18,19 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     # filter_backends = (filters.SearchFilter,)
     # search_fields = ('name', 'email',)
 
+    @action(methods=['post'], detail=True)
+    def delete_user(self, request, pk=None):
+        data = request.data
+        password = data.get('password')
+        user = models.UserProfile.objects.get(pk=pk)
+        if user.check_password(password):
+            user.delete()
+            response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+        else:
+            response = Response({'error': 'Passwords do not match'}, status.HTTP_403_FORBIDDEN)
+
+        return response
+
     @action(methods=['get'], detail=True)
     def relate_with_activity(self, request, pk=None):
         user_pk = pk
