@@ -37,7 +37,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         activity_pk = request.query_params.get('activity_key', None)
         activity = HospitalActivity.objects.get(pk=activity_pk)
 
-        monday, tuesday = 0, 1
+        monday, tuesday = 6, 1
         allowed_days = [monday, tuesday]
         today = timezone.localdate()
         activity_time = timezone.localtime(activity.schedule)

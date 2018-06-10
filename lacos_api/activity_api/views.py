@@ -11,17 +11,20 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
     queryset = models.HospitalActivity.objects.all()
 
     @action(methods=['get'], detail=True)
-    def sort(self, request, pk=None):
+    def lottery(self, request, pk=None):
         activity = models.HospitalActivity.objects.get(pk=pk)
         volunteers = [user.id for user in activity.userprofile_set.all()]
         print(volunteers)
         random.shuffle(volunteers)
+        sorteados = any
         #lista2 = random.choice(volunteers[0])
         #listaaux = lista2
         for i in volunteers:
-            lista =  volunteers[0:3]
-        print(lista)
-        return Response({'oi': str(lista)}, status.HTTP_200_OK)
+            activity.selected = volunteers[0:activity.volunteers]
+            fila = volunteers[activity.volunteers+1:len(volunteers)]
+        # print(sorteados)
+        # activity.selected = [1,2,3]
+        return Response({'sorteadddosss': activity.selected}, status.HTTP_200_OK)
 
 
 class NGOActivityViewSet(viewsets.ModelViewSet):

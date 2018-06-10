@@ -17,7 +17,8 @@ class HospitalActivitySerializer(serializers.HyperlinkedModelSerializer):
             'created',
             'duration',
             'call',
-            'schedule'
+            'schedule',
+            'selected'
         ]
 
 
