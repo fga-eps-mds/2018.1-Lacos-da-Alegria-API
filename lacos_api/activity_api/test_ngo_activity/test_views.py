@@ -23,9 +23,7 @@ class NGOActivityTestView(TestCase):
             name="hospGama",
             volunteers="30",
             limit=True,
-            status="1",
             duration="60",
-            subscription="False",
             call="True"
         )
         response = activity_detail(request, pk=activity.pk)

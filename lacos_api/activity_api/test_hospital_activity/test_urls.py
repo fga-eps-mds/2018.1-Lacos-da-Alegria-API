@@ -35,10 +35,10 @@ class TestHospitalActivityURLs(APITestCase):
             {
                 'name': 'hospGama',
                 'volunteers': '30',
+                'novice': '5',
+                'support': '3',
                 'limit': 'True',
-                'status': '1',
                 'duration': '30',
-                'subscription': 'True',
                 'call': 'True',
                 'schedule': '2018-07-30T15:30:02-03:00'
             },
