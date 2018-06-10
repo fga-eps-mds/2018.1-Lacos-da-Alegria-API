@@ -158,7 +158,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     """Respents a "user profile" inside our system."""
     username = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(5), MaxLengthValidator(20),
                                 RegexValidator(regex='^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$')])
-    password = models.CharField(max_length=32, validators=[MinLengthValidator(6), MaxLengthValidator(132),
+    password = models.CharField(max_length=255, validators=[MinLengthValidator(6), MaxLengthValidator(132),
                                 RegexValidator(regex='^[a-zA-Z0-9]*$')])  # Alterar quando o metodo PUT estiver correto
     email = models.EmailField(max_length=255, unique=True, validators=[EmailValidator()])
     cpf = models.CharField(max_length=255, unique=True, validators=[validate_cpf])
