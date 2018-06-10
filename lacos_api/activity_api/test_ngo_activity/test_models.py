@@ -24,9 +24,7 @@ class TestNGOActivity(TestCase):
             name="hospGama",
             volunteers="30",
             limit="True",
-            status="1",
             duration="60",
-            subscription="True",
             call="True"
         )
 
@@ -36,7 +34,5 @@ class TestNGOActivity(TestCase):
         self.assertEqual(w.name, "hospGama")
         self.assertEqual(w.volunteers, "30")
         self.assertEqual(w.limit, "True")
-        self.assertEqual(w.status, "1")
         self.assertEqual(w.duration, "60")
-        self.assertEqual(w.subscription, "True")
         self.assertEqual(w.call, "True")

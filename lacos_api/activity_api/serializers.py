@@ -11,12 +11,11 @@ class HospitalActivitySerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'name',
             'volunteers',
+            'novice',
+            'support',
             'limit',
             'created',
-            'status',
-            'time',
             'duration',
-            'subscription',
             'call',
             'schedule'
         ]
@@ -26,14 +25,12 @@ class NGOActivitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.NGOActivity
         fields = [
+            'url',
             'id',
             'name',
             'volunteers',
             'limit',
             'created',
-            'status',
-            'time',
             'duration',
-            'subscription',
             'call'
         ]
