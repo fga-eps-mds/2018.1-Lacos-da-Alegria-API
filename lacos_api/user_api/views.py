@@ -79,3 +79,17 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             response = Response({'status': 'Missing activity_pk param'}, status.HTTP_400_BAD_REQUEST)
 
         return response
+
+    @action(methods=['get'], detail=True)
+    def is_user_related_with_this_activity(self, request, pk=None):
+        user_pk = pk
+        user = self.queryset.get(pk=user_pk)
+        activity_pk = request.query_params.get('activity_key', None)
+
+        activity = user.activities.filter(pk=activity_pk)
+        if activity.exists():
+            response = Response({'is_user_related_with_this_activity': 'true'})
+        else:
+            response = Response({'is_user_related_with_this_activity': 'false'})
+
+        return response
