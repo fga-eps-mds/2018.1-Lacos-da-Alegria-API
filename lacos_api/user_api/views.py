@@ -29,3 +29,21 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             response = Response({'error': 'Passwords do not match'}, status.HTTP_403_FORBIDDEN)
 
         return response
+
+    @action(methods=['get'], detail=True)
+    def subscriptions(self, request, pk=None):
+        user_pk = pk
+        activity = HospitalActivity.objects.all()
+        user = models.UserProfile.objects.get(pk=pk)
+        atividades = []
+
+        for activity in HospitalActivity.objects.all():
+            if user in activity.prelis.all():
+                atividades.append(activity.id)
+
+        print("tá aqui ", atividades)
+            
+        
+        response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+
+        return response
