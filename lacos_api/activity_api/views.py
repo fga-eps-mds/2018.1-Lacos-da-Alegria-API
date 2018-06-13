@@ -37,20 +37,19 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
     
     @action(methods=['get'], detail=True)
     def lottery(self, request, pk=None):
-        activity = models.HospitalActivity.objects.get(pk=pk)
-        volunteers = [user.id for user in activity.userprofile_set.all()]
-        print(volunteers)
+        sorteados = []
+        espera = []        
+        activity = self.queryset.get(pk=pk)
+        volunteers = [user.id for user in activity.prelis.all()]
         random.shuffle(volunteers)
-        sorteados = any
-        #lista2 = random.choice(volunteers[0])
-        #listaaux = lista2
         for i in volunteers:
-            activity.selected = volunteers[0:activity.volunteers]
-            fila = volunteers[activity.volunteers:len(volunteers)]
-        # print(sorteados)
-        print(fila)
+            sorteados = volunteers[0:activity.volunteers]
+            espera = volunteers[activity.volunteers:len(volunteers)]
+        activity.selected = ''.join(str(sorteados))
+        activity.waiting = ''.join(str(espera))
+        print("aqui",activity.selected)
         # activity.selected = [1,2,3]
-        return Response({'sorteadddosss': activity.selected}, status.HTTP_200_OK)
+        return Response({'sorteadddosss': activity.waiting}, status.HTTP_200_OK)
 
 
 class NGOActivityViewSet(viewsets.ModelViewSet):

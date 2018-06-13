@@ -19,7 +19,8 @@ class HospitalActivitySerializer(serializers.HyperlinkedModelSerializer):
             'call',
             'schedule',
             'prelis',
-            'selected'
+            'selected',
+            'waiting'
         ]
 
 

@@ -12,7 +12,8 @@ class HospitalActivity(models.Model):
     call = models.BooleanField(default=False)
     schedule = models.DateTimeField(auto_now_add=False)
     prelis = models.ManyToManyField('user_api.UserProfile', blank=True, related_name='prelis')
-    selected = models.ManyToManyField('user_api.UserProfile', blank=True, related_name='selected')
+    selected = models.CharField(max_length=10000, default='')
+    waiting = models.CharField(max_length=10000, default='')
 
 class NGOActivity(models.Model):
     name = models.CharField(max_length=60)
