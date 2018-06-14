@@ -26,11 +26,11 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         activity_time = timezone.localtime(activity.schedule)
         difference = activity_time - timezone.localtime(timezone.now())
         end_activity = activity.schedule + timedelta(minutes=activity.duration)
-        response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+        response = Response({'status': 'Succesfully subscribed'}, status.HTTP_200_OK)
         
         user = UserProfile.objects.get(pk=user_pk)
         
-        activity.prelis.add(user)
+        activity.prelist.add(user)
 
         return response
 
@@ -38,22 +38,22 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True)
     def lottery(self, request, pk=None):
         sorteados = []
-        espera = []        
+        espera = []
 
         activity = self.queryset.get(pk=pk)
-        volunteers = [user.id for user in activity.prelis.all()]
+        volunteers = [user.id for user in activity.prelist.all()]
         random.shuffle(volunteers)
 
         for i in volunteers:
             sorteados = volunteers[0:activity.volunteers]
             espera = volunteers[activity.volunteers:len(volunteers)]
 
-        activity.selected = ''.join(str(sorteados))
-        activity.waiting = ''.join(str(espera))
+        activity.selected = ''.join(str(sorteados)).strip('[]')
+        activity.waiting = ''.join(str(espera)).strip('[]')
 
         activity.save()
 
-        return Response({'sorteadddosss': activity.selected}, status.HTTP_200_OK)
+        return Response({'Lottery succesfully done'}, status.HTTP_200_OK)
 
     @action(methods=['get'], detail=True)
     def unsubscribe(self,request, pk=None):
@@ -62,23 +62,32 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
 
         user = UserProfile.objects.get(pk=user_pk)
         activity = self.queryset.get(pk=activity_pk)
-        response = Response({'status': 'User was not subscribed'}, status.HTTP_200_OK)
+        response = Response({'status': 'User was not subscribed'}, status.HTTP_404_NOT_FOUND)
 
-        if user in activity.prelis.all():
-            activity.prelis.remove(user)
-            selected = [int(n) for n in activity.selected.split(',')]
-            if user.id in selected:
-                selected.remove(user.id)
-                selected = ','.join(str(n) for n in selected)
-                activity.selected = selected
+        if user in activity.prelist.all():
+            activity.prelist.remove(user)
+            response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+            
+        if activity.selected == '':
+            return response
+            
+        selected = [int(n) for n in activity.selected.split(',')]
 
-                response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
-            else:
-                waiting = [int(n) for n in activity.waiting.split(',')]
-                waiting.remove(user.id)
-                activity.waitin = waiting
-
-                response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+        if user.id in selected:
+            selected.remove(user.id)
+            print(selected)
+            selected = ', '.join(map(str, selected))
+            activity.selected = selected
+            activity.save()
+            response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+        
+        else:
+            waiting = [int(n) for n in activity.waiting.split(',')]
+            waiting.remove(user.id)
+            waiting = ', '.join(map(str, waiting))
+            activity.waiting = waiting
+            activity.save()
+            response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
 
         return response
 
