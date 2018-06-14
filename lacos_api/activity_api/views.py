@@ -72,11 +72,15 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
                 selected = ','.join(str(n) for n in selected)
                 activity.selected = selected
 
+                activity.save()
+                
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
             else:
                 waiting = [int(n) for n in activity.waiting.split(',')]
                 waiting.remove(user.id)
                 activity.waitin = waiting
+
+                activity.save()
 
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
 
