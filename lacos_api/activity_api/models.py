@@ -15,6 +15,7 @@ class HospitalActivity(models.Model):
     selected = models.CharField(max_length=10000, default='')
     waiting = models.CharField(max_length=10000, default='')
 
+
 class NGOActivity(models.Model):
     name = models.CharField(max_length=60)
     volunteers = models.IntegerField()
@@ -22,3 +23,7 @@ class NGOActivity(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     duration = models.IntegerField()
     call = models.BooleanField(default=False)
+    schedule = models.DateTimeField(auto_now_add=False)
+    prelist = models.ManyToManyField('user_api.UserProfile', blank=True, related_name='prelistNgo')
+    selected = models.CharField(max_length=10000, default='')
+    waiting = models.CharField(max_length=10000, default='')

@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.core.validators import (RegexValidator, MinLengthValidator, MaxLengthValidator, MinValueValidator,
                                     MaxValueValidator, EmailValidator)
 
+
 def validate_genre(value):
     if (value == "Masculino") or (value == "Feminino"):
         print("Valid value")

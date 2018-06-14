@@ -1,11 +1,8 @@
-from django.utils import timezone
-from datetime import timedelta
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from . import serializers, models
-from lacos_api.activity_api.models import HospitalActivity
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -17,6 +14,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     # permission_classes = (permissions.UpdateOwnProfile,)
     # filter_backends = (filters.SearchFilter,)
     # search_fields = ('name', 'email',)
+
     @action(methods=['post'], detail=True)
     def delete_user(self, request, pk=None):
         data = request.data
@@ -27,23 +25,5 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
         else:
             response = Response({'error': 'Passwords do not match'}, status.HTTP_403_FORBIDDEN)
-
-        return response
-
-    @action(methods=['get'], detail=True)
-    def subscriptions(self, request, pk=None):
-        user_pk = pk
-        activity = HospitalActivity.objects.all()
-        user = models.UserProfile.objects.get(pk=pk)
-        atividades = []
-
-        for activity in HospitalActivity.objects.all():
-            if user in activity.prelis.all():
-                atividades.append(activity.id)
-
-        print("tá aqui ", atividades)
-            
-        
-        response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
 
         return response

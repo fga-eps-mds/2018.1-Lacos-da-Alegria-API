@@ -25,7 +25,8 @@ class TestNGOActivity(TestCase):
             volunteers="30",
             limit="True",
             duration="60",
-            call="True"
+            call="True",
+            schedule="2018-07-30T15:30:02-03:00"
         )
 
     # Verify if the activity was created
@@ -36,3 +37,4 @@ class TestNGOActivity(TestCase):
         self.assertEqual(w.limit, "True")
         self.assertEqual(w.duration, "60")
         self.assertEqual(w.call, "True")
+        self.assertEqual(w.schedule, "2018-07-30T15:30:02-03:00")
