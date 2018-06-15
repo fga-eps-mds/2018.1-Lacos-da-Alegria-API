@@ -31,7 +31,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             response = Response({'error': 'Passwords do not match'}, status.HTTP_403_FORBIDDEN)
 
         return response
-    
+
     @action(methods=['post'], detail=True)
     def edit_user(self, request, pk=None):
         data = request.data
@@ -43,7 +43,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             user.set_password(password)
             user.save()
             print(user)
-            response = Response({'status': 'Passwords do not match'}, status.HTTP_200_OK)
+            response = Response({'password': user.password}, status.HTTP_200_OK)
 
         return response
 
