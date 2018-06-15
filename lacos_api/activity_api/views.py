@@ -62,18 +62,24 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         response = Response({'status': 'User was not subscribed'}, status.HTTP_200_OK)
 
         if user in activity.prelist.all():
-            activity.prelist.remove(user)
             selected = [int(n) for n in activity.selected.split(',')]
+            waiting = [int(n) for n in activity.waiting.split(',')]
+            activity.prelist.remove(user)
             print(selected)
             if user.id in selected:
                 selected.remove(user.id)
+                # l = 0
+                # for l in waiting:
+                selected.append(waiting[0])
+                waiting.remove(waiting[0])
+                waiting = ', '.join(map(str, waiting))
                 selected = ', '.join(map(str, selected))
+                activity.waiting = waiting
                 activity.selected = selected
                 activity.save()
 
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
             else:
-                waiting = [int(n) for n in activity.waiting.split(',')]
                 waiting.remove(user.id)
                 waiting = ', '.join(map(str, waiting))
                 activity.waiting = waiting
