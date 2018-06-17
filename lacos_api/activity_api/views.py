@@ -129,7 +129,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
                 activity.save()
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
 
-            else:
+            elif user.id in waiting:
                 waiting.remove(user.id)
                 waiting = ', '.join(map(str, waiting))
                 activity.waiting = waiting
@@ -139,7 +139,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         return response
 
     @action(methods=['get'], detail=True)
-    def searchUser(self, request, pk=None):
+    def search_user(self, request, pk=None):
         user_pk = request.query_params.get('user_key', None)
         user = UserProfile.objects.get(pk=user_pk)
         activity = self.queryset.get(pk=pk)
@@ -155,11 +155,11 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
             if user.id in waiting:
                 found = waiting.index(user.id)
                 resp = "Na posição " + str(found + 1) + " da fila de espera."
-                return Response({'found': found, 'resp': resp}, status.HTTP_200_OK)
+                return Response({'resp': resp}, status.HTTP_200_OK)
 
         else:
             found = "Inscrito na pré-lista"
-            response = Response({'found': found}, status.HTTP_200_OK)
+            response = Response({'resp': found}, status.HTTP_200_OK)
 
         return response
 
@@ -282,8 +282,9 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
                 activity.selected = selected
                 activity.save()
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
-
-            else:
+            
+            if user.id in waiting and waiting != []:
+                print('aaaa',user.id)
                 waiting.remove(user.id)
                 waiting = ', '.join(map(str, waiting))
                 activity.waiting = waiting
