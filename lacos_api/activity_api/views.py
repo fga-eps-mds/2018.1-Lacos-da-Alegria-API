@@ -20,6 +20,8 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         user_pk = request.query_params.get('user_key', None)
         activity = self.queryset.get(pk=activity_pk)
 
+        novice_list = []
+
         """# monday, tuesday = 0, 1
         # allowed_days = [monday, tuesday]
         # today = timezone.localdate()
@@ -30,7 +32,20 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
 
         user = UserProfile.objects.get(pk=user_pk)
 
-        activity.prelist.add(user)
+        # if  novice_list == "":
+        #     novice_list = [int(n) for n in activity.novice_list.split(',')]
+
+        if user.role=='Novato':
+            if activity.novice_list != "":
+                novice_list = [int(n) for n in activity.novice_list.split(',')]
+            novice_list.append(user_pk)
+            novice_list = ', '.join(map(str, novice_list))
+            activity.novice_list = novice_list
+            activity.save()
+            response = Response({'status': 'Você é um calouro'}, status.HTTP_200_OK)
+        else:
+            activity.prelist.add(user)
+
 
         return response
 
@@ -104,6 +119,8 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         activity = self.queryset.get(pk=activity_pk)
         response = Response({'status': 'User was not subscribed'}, status.HTTP_200_OK)
 
+        novice_list = []
+
         if user in activity.prelist.all():
             activity.prelist.remove(user)
             selected = []
@@ -135,6 +152,15 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
                 activity.waiting = waiting
                 activity.save()
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+
+        if user_pk in activity.novice_list:
+            if activity.novice_list != "":
+                novice_list = [int(n) for n in activity.novice_list.split(',')]
+            print('sasa')
+            novice_list.remove(user_pk)
+            novice_list = ', '.join(map(str, activity.novice_list))
+            activity.novice_list = novice_list
+            activity.save()
 
         return response
 

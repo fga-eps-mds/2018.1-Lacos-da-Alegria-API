@@ -11,6 +11,7 @@ class HospitalActivity(models.Model):
     duration = models.IntegerField()
     call = models.BooleanField(default=False)
     schedule = models.DateTimeField(auto_now_add=False)
+    novice_list = models.CharField(max_length=10000, default='')
     prelist = models.ManyToManyField('user_api.UserProfile', blank=True, related_name='prelist')
     selected = models.CharField(max_length=10000, default='')
     waiting = models.CharField(max_length=10000, default='')
