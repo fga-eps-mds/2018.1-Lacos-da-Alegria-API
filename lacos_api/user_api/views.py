@@ -29,7 +29,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         return response
 
     @action(methods=['get'], detail=True)
-    def getPosition(self, request, pk=None):
+    def get_user_activities(self, request, pk=None):
         user = models.UserProfile.objects.get(pk=pk)
         aux = user.prelist.all()
         mylist = []
