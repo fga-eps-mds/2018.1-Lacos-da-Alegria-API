@@ -40,6 +40,7 @@ class TestNGOActivityURLs(APITestCase):
                 'duration': '30',
                 'subscription': 'True',
                 'call': 'True',
+                'schedule': '2018-07-30T15:30:02-03:00'
             },
             format='json'
         )

@@ -25,7 +25,6 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
             'ddd',
             'whatsapp',
             'genre',
-            'activities',
             'role'
         )
         # fields = '__all__'

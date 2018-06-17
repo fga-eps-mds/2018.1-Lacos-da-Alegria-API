@@ -17,7 +17,10 @@ class HospitalActivitySerializer(serializers.HyperlinkedModelSerializer):
             'created',
             'duration',
             'call',
-            'schedule'
+            'schedule',
+            'prelist',
+            'selected',
+            'waiting'
         ]
 
 
@@ -32,5 +35,9 @@ class NGOActivitySerializer(serializers.HyperlinkedModelSerializer):
             'limit',
             'created',
             'duration',
-            'call'
+            'call',
+            'schedule',
+            'prelist',
+            'selected',
+            'waiting'
         ]
