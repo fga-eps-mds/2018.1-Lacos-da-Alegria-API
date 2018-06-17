@@ -31,6 +31,21 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
         return response
 
+    @action(methods=['post'], detail=True)
+    def edit_user(self, request, pk=None):
+        data = request.data
+        password = data.get('password')
+        user = models.UserProfile.objects.get(pk=pk)
+        if user.check_password(password):
+            response = Response({'error': 'A senha nova coincide com a senha antiga'}, status.HTTP_403_FORBIDDEN)
+        else:
+            user.set_password(password)
+            user.save()
+            print(user)
+            response = Response({'password': user.password}, status.HTTP_200_OK)
+
+        return response
+
     @action(methods=['get'], detail=True)
     def relate_with_activity(self, request, pk=None):
         user_pk = pk
