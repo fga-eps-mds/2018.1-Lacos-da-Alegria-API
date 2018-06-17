@@ -1,5 +1,4 @@
 from django.utils import timezone
-from django.contrib.auth.models import BaseUserManager
 from datetime import timedelta
 from rest_framework import viewsets, status
 from rest_framework.response import Response
