@@ -138,6 +138,31 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
 
         return response
 
+    @action(methods=['get'], detail=True)
+    def searchUser(self, request, pk=None):
+        user_pk = request.query_params.get('user_key', None)
+        user = UserProfile.objects.get(pk=user_pk)
+        activity = self.queryset.get(pk=pk)
+
+        if activity.selected != "":
+            selected = [int(n) for n in activity.selected.split(',')]
+            if user.id in selected:
+                resp = "Sorteado para atividade"
+                return Response({'resp': resp}, status.HTTP_200_OK)
+
+        if activity.waiting != "":
+            waiting = [int(n) for n in activity.waiting.split(',')]
+            if user.id in waiting:
+                found = waiting.index(user.id)
+                resp = "Na posição " + str(found + 1) + " da fila de espera."
+                return Response({'found': found, 'resp': resp}, status.HTTP_200_OK)
+
+        else:
+            found = "Inscrito na pré-lista"
+            response = Response({'found': found}, status.HTTP_200_OK)
+
+        return response
+
 
 class NGOActivityViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.NGOActivitySerializer

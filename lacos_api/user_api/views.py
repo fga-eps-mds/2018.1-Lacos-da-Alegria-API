@@ -27,3 +27,16 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             response = Response({'error': 'Passwords do not match'}, status.HTTP_403_FORBIDDEN)
 
         return response
+
+    @action(methods=['get'], detail=True)
+    def getPosition(self, request, pk=None):
+        user = models.UserProfile.objects.get(pk=pk)
+        aux = user.prelist.all()
+        mylist = []
+        print(aux)
+        for i in aux:
+            mylist.append(i.pk)
+        # aux = aux[0].pk
+        # aux = str(mylist)
+        response = Response({'status': 'ok', 'aux': mylist}, status.HTTP_200_OK)
+        return response
