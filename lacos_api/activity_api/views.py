@@ -282,9 +282,9 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
                 activity.selected = selected
                 activity.save()
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
-            
+
             if user.id in waiting and waiting != []:
-                print('aaaa',user.id)
+                print('aaaa', user.id)
                 waiting.remove(user.id)
                 waiting = ', '.join(map(str, waiting))
                 activity.waiting = waiting
