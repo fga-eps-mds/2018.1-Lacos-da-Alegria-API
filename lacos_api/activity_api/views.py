@@ -21,7 +21,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         activity = self.queryset.get(pk=activity_pk)
         user = UserProfile.objects.get(pk=user_pk)
 
-        monday, tuesday, wednesday, thursday, friday, saturday, sunday = 0, 1, 2, 3, 4, 5, 6
+        wednesday, thursday, friday, saturday, sunday = 2, 3, 4, 5, 6
         subscribe_days = [wednesday, thursday, friday, saturday]
         not_allowed_day = [sunday]
         today = timezone.localdate()
@@ -33,25 +33,25 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         waiting = []
 
         if difference < timedelta(hours=2):
-            return  Response({'status': 'Você não pode entrar na pré-lista faltando 2hs '
-                              'ou menos para o início da atividade.'}, status.HTTP_403_FORBIDDEN)
+            return Response({'status': 'Você não pode entrar na pré-lista faltando 2hs '
+                             'ou menos para o início da atividade.'}, status.HTTP_403_FORBIDDEN)
 
         if user.prelist.count() != 0:
             for i in user.prelist.all():
                 if (activity.schedule > i.schedule and
-                    activity.schedule < (i.schedule + timedelta(minutes=i.duration))):
+                   activity.schedule < (i.schedule + timedelta(minutes=i.duration))):
                     return Response({'status': 'Conflito de horário com outra atividade '
                                      'que você está participando!'}, status.HTTP_403_FORBIDDEN)
 
-               elif end_activity > i.schedule and end_activity < (i.schedule + timedelta(minutes=i.duration)):
+                elif end_activity > i.schedule and end_activity < (i.schedule + timedelta(minutes=i.duration)):
                     return Response({'status': 'Conflito de horário com outra atividade '
                                     'que você está participando!'}, status.HTTP_403_FORBIDDEN)
 
-               elif activity.schedule == i.schedule:
-                   return Response({'status': 'Conflito de horário com outra atividade '
+                elif activity.schedule == i.schedule:
+                    return Response({'status': 'Conflito de horário com outra atividade '
                                      'que você está participando!'}, status.HTTP_403_FORBIDDEN)
 
-        #Subscribe user on selected or waiting list
+        """Subscribe user on selected or waiting list"""
         if activity.selected != "":
             selected = [int(n) for n in activity.selected.split(',')]
 
@@ -61,15 +61,15 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         if today.weekday() is not not_allowed_day and activity_pk is not None:
             activity.prelist.add(user)
 
-        if len(selected) < activity.volunteers and not(user.id in selected or user.id in waiting)
-                                               and today.weekday() is in subscribe_day:
+        if ((len(selected) < activity.volunteers) and not(user.id in selected or user.id in waiting) and
+           (today.weekday() in subscribe_days)):
             selected.append(user_pk)
             selected = ', '.join(map(str, selected))
             activity.selected = selected
             activity.save()
             return Response({'status': 'Succesfully subscribed'}, status.HTTP_200_OK)
 
-        if not(user.id in selected or user.id in waiting) and today.weekday() is in subscribe_day:
+        if not(user.id in selected or user.id in waiting) and today.weekday() in subscribe_days:
             waiting.append(user_pk)
             waiting = ', '.join(map(str, waiting))
             activity.waiting = waiting
