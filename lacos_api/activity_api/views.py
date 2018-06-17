@@ -35,7 +35,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         # if  novice_list == "":
         #     novice_list = [int(n) for n in activity.novice_list.split(',')]
 
-        if user.role=='Novato':
+        if user.role == 'Novato':
             if activity.novice_list != "":
                 novice_list = [int(n) for n in activity.novice_list.split(',')]
             novice_list.append(user_pk)
@@ -45,7 +45,6 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
             response = Response({'status': 'Você é um calouro'}, status.HTTP_200_OK)
         else:
             activity.prelist.add(user)
-
 
         return response
 
