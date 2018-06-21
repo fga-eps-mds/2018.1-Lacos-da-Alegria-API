@@ -188,6 +188,13 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
                 resp = "Na posição " + str(found + 1) + " da fila de espera."
                 return Response({'resp': resp}, status.HTTP_200_OK)
 
+        if activity.novice_list != "":
+            novice_list = [int(n) for n in activity.novice_list.split(',')]
+            if user.id in novice_list:
+                found = novice_list.index(user.id)
+                resp = "Na posição " + str(found + 1) + " da fila de espera."
+                return Response({'resp': resp}, status.HTTP_200_OK)
+
         else:
             found = "Inscrito na pré-lista"
             response = Response({'resp': found}, status.HTTP_200_OK)
