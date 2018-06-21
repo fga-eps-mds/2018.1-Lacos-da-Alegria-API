@@ -181,6 +181,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin, RegexValidator):
     # voluntary_hours = models.IntegerField()
     # created = models.DateField()
     role = models.CharField(max_length=255, default='Novato')
+    inscrito = models.BooleanField(default=False)
 
     objects = UserProfileManager()
 
