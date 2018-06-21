@@ -18,18 +18,24 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
     def subscribe(self, request, pk=None):
         activity_pk = pk
         user_pk = request.query_params.get('user_key', None)
-        user = UserProfile.objects.get(pk=user_pk)
         activity = self.queryset.get(pk=activity_pk)
         user = UserProfile.objects.get(pk=user_pk)
 
+        novice_list = []
+
         if user.role == 'Novato':
-            if activity.novice_list != "":
-                novice_list = [int(n) for n in activity.novice_list.split(',')]
-            novice_list.append(user_pk)
-            novice_list = ', '.join(map(str, novice_list))
-            activity.novice_list = novice_list
-            activity.save()
-            return Response({'status': 'Inscrito na fila de novatos'}, status.HTTP_200_OK)
+            if user.inscrito is False:
+                if activity.novice_list != "":
+                    novice_list = [int(n) for n in activity.novice_list.split(',')]
+                    novice_list.append(user_pk)
+                    novice_list = ', '.join(map(str, novice_list))
+                    activity.novice_list = novice_list
+                    activity.save()
+                    user.inscrito = True
+                    user.save()
+                    return Response({'status': 'Inscrito na fila de novatos'}, status.HTTP_200_OK)
+            else:
+                return Response({'status': 'Novato já cadastrado em outra atividade'}, status.HTTP_403_FORBIDDEN)
 
         wednesday, thursday, friday, saturday, sunday = 2, 3, 4, 5, 6
         subscribe_days = [wednesday, thursday, friday, saturday]
@@ -152,11 +158,12 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         if activity.novice_list != "":
             novice_list = [int(n) for n in activity.novice_list.split(',')]
             if user.id in novice_list:
-                print('sasa')
                 novice_list.remove(user.id)
                 novice_list = ', '.join(map(str, novice_list))
                 activity.novice_list = novice_list
                 activity.save()
+                user.inscrito = False
+                user.save()
                 response = Response({'status': 'Succesfully deleted from novice queue'}, status.HTTP_200_OK)
 
         return response
@@ -177,6 +184,13 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
             waiting = [int(n) for n in activity.waiting.split(',')]
             if user.id in waiting:
                 found = waiting.index(user.id)
+                resp = "Na posição " + str(found + 1) + " da fila de espera."
+                return Response({'resp': resp}, status.HTTP_200_OK)
+
+        if activity.novice_list != "":
+            novice_list = [int(n) for n in activity.novice_list.split(',')]
+            if user.id in novice_list:
+                found = novice_list.index(user.id)
                 resp = "Na posição " + str(found + 1) + " da fila de espera."
                 return Response({'resp': resp}, status.HTTP_200_OK)
 

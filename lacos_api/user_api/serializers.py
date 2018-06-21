@@ -25,7 +25,8 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
             'ddd',
             'whatsapp',
             'genre',
-            'role'
+            'role',
+            'inscrito'
         )
         # fields = '__all__'
         # extra_kwargs = {'password': {'write_only': True}}
@@ -47,7 +48,8 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
             ddd=validated_data['ddd'],
             whatsapp=validated_data['whatsapp'],
             genre=validated_data['genre'],
-            role=validated_data['role']
+            role=validated_data['role'],
+            inscrito=validated_data['inscrito']
         )
 
         user.set_password(validated_data['password'])
