@@ -206,7 +206,7 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
     queryset = models.NGOActivity.objects.all()
 
     @action(methods=['get'], detail=True)
-    def subscribe(self, request, pk=None):
+    def relate_with_ngo(self, request, pk=None):
         activity_pk = pk
         user_pk = request.query_params.get('user_key', None)
         activity = self.queryset.get(pk=activity_pk)
@@ -273,7 +273,7 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
     def lottery(self, request, pk=None):
         sorteados = []
         espera = []
-        activity = self.queryset.get(pk=pk)
+        activity = self.q5ueryset.get(pk=pk)
         volunteers = [user.id for user in activity.prelist.all()]
         random.shuffle(volunteers)
         for i in volunteers:
@@ -341,6 +341,9 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
             if user.id in selected:
                 resp = "Sorteado para atividade"
                 return Response({'resp': resp}, status.HTTP_200_OK)
+            # else:
+            #     resp = "Não foi sorteado para atividade."
+            #     return Response({'resp': resp}, status.HTTP_200_OK)
 
         if activity.waiting != "":
             waiting = [int(n) for n in activity.waiting.split(',')]
@@ -348,6 +351,10 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
                 found = waiting.index(user.id)
                 resp = "Na posição " + str(found + 1) + " da fila de espera."
                 return Response({'resp': resp}, status.HTTP_200_OK)
+            # else:
+            #     resp = "Não localizado na fila de espera."
+            #     return Response({'resp': resp}, status.HTTP_200_OK)
+
         else:
             found = "Inscrito na pré-lista"
             response = Response({'resp': found}, status.HTTP_200_OK)
