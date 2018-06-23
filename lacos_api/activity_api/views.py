@@ -325,9 +325,9 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
                 waiting = ', '.join(map(str, waiting))
                 ngo.waiting = waiting
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
-        
+
             ngo.save()
-        
+
         return response
 
     @action(methods=['get'], detail=True)
@@ -341,7 +341,6 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
             selected = [int(n) for n in ngo.selected.split(',')]
             if user.id in selected:
                 found = "Sorteado para atividade"
-                print ("aqui o found", found)
                 return Response({'resp': found}, status.HTTP_200_OK)
 
         if ngo.waiting != "":
@@ -349,12 +348,10 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
             if user.id in waiting:
                 found = waiting.index(user.id)
                 resp = "Na posição " + str(found + 1) + " da fila de espera."
-                print ("aqui o found", found)
                 return Response({'resp': resp}, status.HTTP_200_OK)
 
         else:
             found = "Inscrito na pré-lista"
-            print ("aqui o found", found)
             response = Response({'resp': found}, status.HTTP_200_OK)
 
         return response
