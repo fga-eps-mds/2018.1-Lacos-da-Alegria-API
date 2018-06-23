@@ -207,18 +207,18 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
 
     @action(methods=['get'], detail=True)
     def relate_with_ngo(self, request, pk=None):
-        activity_pk = pk
+        ngo_pk = pk
         user_pk = request.query_params.get('user_key', None)
-        activity = self.queryset.get(pk=activity_pk)
+        ngo = self.queryset.get(pk=ngo_pk)
         user = UserProfile.objects.get(pk=user_pk)
 
-        wednesday, thursday, friday, saturday, sunday = 2, 3, 4, 5, 6
-        subscribe_days = [wednesday, thursday, friday, saturday]
+        wednesday, thursday, saturday, sunday = 2, 3, 5, 6
+        subscribe_days = [wednesday, thursday, saturday]
         not_allowed_day = [sunday]
         today = timezone.localdate()
-        activity_time = timezone.localtime(activity.schedule)
-        difference = activity_time - timezone.localtime(timezone.now())
-        end_activity = activity.schedule + timedelta(minutes=activity.duration)
+        ngo_time = timezone.localtime(ngo.schedule)
+        difference = ngo_time - timezone.localtime(timezone.now())
+        end_ngo = ngo.schedule + timedelta(minutes=ngo.duration)
 
         selected = []
         waiting = []
@@ -227,44 +227,44 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
             return Response({'status': 'Você não pode entrar na pré-lista faltando 2hs '
                              'ou menos para o início da atividade.'}, status.HTTP_403_FORBIDDEN)
 
-        if user.prelist.count() != 0:
-            for i in user.prelist.all():
-                if (activity.schedule > i.schedule and
-                   activity.schedule < (i.schedule + timedelta(minutes=i.duration))):
+        if user.prelistNgo.count() != 0:
+            for i in user.prelistNgo.all():
+                if (ngo.schedule > i.schedule and
+                   ngo.schedule < (i.schedule + timedelta(minutes=i.duration))):
                     return Response({'status': 'Conflito de horário com outra atividade '
                                      'que você está participando!'}, status.HTTP_403_FORBIDDEN)
 
-                elif end_activity > i.schedule and end_activity < (i.schedule + timedelta(minutes=i.duration)):
+                elif end_ngo > i.schedule and end_ngo < (i.schedule + timedelta(minutes=i.duration)):
                     return Response({'status': 'Conflito de horário com outra atividade '
                                     'que você está participando!'}, status.HTTP_403_FORBIDDEN)
 
-                elif activity.schedule == i.schedule:
+                elif ngo.schedule == i.schedule:
                     return Response({'status': 'Conflito de horário com outra atividade '
                                      'que você está participando!'}, status.HTTP_403_FORBIDDEN)
 
         """Subscribe user on selected or waiting list"""
-        if activity.selected != "":
-            selected = [int(n) for n in activity.selected.split(',')]
+        if ngo.selected != "":
+            selected = [int(n) for n in ngo.selected.split(',')]
 
-        if activity.waiting != "":
-            waiting = [int(n) for n in activity.waiting.split(',')]
+        if ngo.waiting != "":
+            waiting = [int(n) for n in ngo.waiting.split(',')]
 
-        if today.weekday() is not not_allowed_day and activity_pk is not None:
-            activity.prelist.add(user)
+        if today.weekday() is not not_allowed_day and ngo_pk is not None:
+            ngo.prelistNgo.add(user)
 
-        if ((len(selected) < activity.volunteers) and not(user.id in selected or user.id in waiting) and
+        if ((len(selected) < ngo.volunteers) and not(user.id in selected or user.id in waiting) and
            (today.weekday() in subscribe_days)):
             selected.append(user_pk)
             selected = ', '.join(map(str, selected))
-            activity.selected = selected
-            activity.save()
+            ngo.selected = selected
+            ngo.save()
             return Response({'status': 'Succesfully subscribed'}, status.HTTP_200_OK)
 
         if not(user.id in selected or user.id in waiting) and today.weekday() in subscribe_days:
             waiting.append(user_pk)
             waiting = ', '.join(map(str, waiting))
-            activity.waiting = waiting
-            activity.save()
+            ngo.waiting = waiting
+            ngo.save()
             return Response({'status': 'Succesfully subscribed'}, status.HTTP_200_OK)
 
         return Response({'status': 'Você entrou na pré-lista, aguarde o resultado do sorteio'}, status.HTTP_200_OK)
@@ -273,39 +273,39 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
     def lottery(self, request, pk=None):
         sorteados = []
         espera = []
-        activity = self.q5ueryset.get(pk=pk)
-        volunteers = [user.id for user in activity.prelist.all()]
+        ngo = self.queryset.get(pk=pk)
+        volunteers = [user.id for user in ngo.prelistNgo.all()]
         random.shuffle(volunteers)
         for i in volunteers:
-            sorteados = volunteers[0:activity.volunteers]
-            espera = volunteers[activity.volunteers:len(volunteers)]
+            sorteados = volunteers[0:ngo.volunteers]
+            espera = volunteers[ngo.volunteers:len(volunteers)]
 
-        activity.selected = ''.join(str(sorteados)).strip('[]')
-        activity.waiting = ''.join(str(espera)).strip('[]')
+        ngo.selected = ''.join(str(sorteados)).strip('[]')
+        ngo.waiting = ''.join(str(espera)).strip('[]')
 
-        activity.save()
+        ngo.save()
 
         return Response({'Lottery done succesfully'}, status.HTTP_200_OK)
 
     @action(methods=['get'], detail=True)
     def unsubscribe(self, request, pk=None):
-        activity_pk = pk
+        ngo_pk = pk
         user_pk = request.query_params.get('user_key', None)
 
         user = UserProfile.objects.get(pk=user_pk)
-        activity = self.queryset.get(pk=activity_pk)
+        ngo = self.queryset.get(pk=ngo_pk)
         response = Response({'status': 'User was not subscribed'}, status.HTTP_200_OK)
 
-        if user in activity.prelist.all():
-            activity.prelist.remove(user)
+        if user in ngo.prelistNgo.all():
+            ngo.prelistNgo.remove(user)
             selected = []
             waiting = []
 
-            if activity.selected != "":
-                selected = [int(n) for n in activity.selected.split(',')]
+            if ngo.selected != "":
+                selected = [int(n) for n in ngo.selected.split(',')]
 
-            if activity.waiting != "":
-                waiting = [int(n) for n in activity.waiting.split(',')]
+            if ngo.waiting != "":
+                waiting = [int(n) for n in ngo.waiting.split(',')]
 
             if user.id in selected:
                 selected.remove(user.id)
@@ -314,49 +314,47 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
                     selected.append(waiting[0])
                     waiting.remove(waiting[0])
                     waiting = ', '.join(map(str, waiting))
-                    activity.waiting = waiting
+                    ngo.waiting = waiting
 
                 selected = ', '.join(map(str, selected))
-                activity.selected = selected
-                activity.save()
+                ngo.selected = selected
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
 
             elif user.id in waiting:
                 waiting.remove(user.id)
                 waiting = ', '.join(map(str, waiting))
-                activity.waiting = waiting
-                activity.save()
+                ngo.waiting = waiting
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
-
+        
+            ngo.save()
+        
         return response
 
     @action(methods=['get'], detail=True)
-    def search_user(self, request, pk=None):
+    def search_user_ngo(self, request, pk=None):
         user_pk = request.query_params.get('user_key', None)
         user = UserProfile.objects.get(pk=user_pk)
-        activity = self.queryset.get(pk=pk)
+        ngo = self.queryset.get(pk=pk)
+        response = Response({'Erro'}, status.HTTP_403_FORBIDDEN)
 
-        if activity.selected != "":
-            selected = [int(n) for n in activity.selected.split(',')]
+        if ngo.selected != "":
+            selected = [int(n) for n in ngo.selected.split(',')]
             if user.id in selected:
-                resp = "Sorteado para atividade"
-                return Response({'resp': resp}, status.HTTP_200_OK)
-            # else:
-            #     resp = "Não foi sorteado para atividade."
-            #     return Response({'resp': resp}, status.HTTP_200_OK)
+                found = "Sorteado para atividade"
+                print ("aqui o found", found)
+                return Response({'resp': found}, status.HTTP_200_OK)
 
-        if activity.waiting != "":
-            waiting = [int(n) for n in activity.waiting.split(',')]
+        if ngo.waiting != "":
+            waiting = [int(n) for n in ngo.waiting.split(',')]
             if user.id in waiting:
                 found = waiting.index(user.id)
                 resp = "Na posição " + str(found + 1) + " da fila de espera."
+                print ("aqui o found", found)
                 return Response({'resp': resp}, status.HTTP_200_OK)
-            # else:
-            #     resp = "Não localizado na fila de espera."
-            #     return Response({'resp': resp}, status.HTTP_200_OK)
 
         else:
             found = "Inscrito na pré-lista"
+            print ("aqui o found", found)
             response = Response({'resp': found}, status.HTTP_200_OK)
 
         return response
