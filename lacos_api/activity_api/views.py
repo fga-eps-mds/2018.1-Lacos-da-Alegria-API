@@ -39,7 +39,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
 
         wednesday, thursday, friday, saturday, sunday = 2, 3, 4, 5, 6
         subscribe_days = [wednesday, thursday, friday, saturday]
-        not_allowed_day = [sunday]
+        not_allowed_day = sunday
         today = timezone.localdate()
         activity_time = timezone.localtime(activity.schedule)
         difference = activity_time - timezone.localtime(timezone.now())
