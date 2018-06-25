@@ -119,7 +119,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
 
         user = UserProfile.objects.get(pk=user_pk)
         activity = self.queryset.get(pk=activity_pk)
-        response = Response({'status': 'User was not subscribed'}, status.HTTP_200_OK)
+        response = Response({'status': 'User was not subscribed'}, status.HTTP_405_METHOD_NOT_ALLOWED)
 
         novice_list = []
 
@@ -214,7 +214,7 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
 
         wednesday, thursday, saturday, sunday = 2, 3, 5, 6
         subscribe_days = [wednesday, thursday, saturday]
-        not_allowed_day = [sunday]
+        not_allowed_day = sunday
         today = timezone.localdate()
         ngo_time = timezone.localtime(ngo.schedule)
         difference = ngo_time - timezone.localtime(timezone.now())
@@ -294,7 +294,7 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
 
         user = UserProfile.objects.get(pk=user_pk)
         ngo = self.queryset.get(pk=ngo_pk)
-        response = Response({'status': 'User was not subscribed'}, status.HTTP_200_OK)
+        response = Response({'status': 'User was not subscribed'}, status.HTTP_405_METHOD_NOT_ALLOWED)
 
         if user in ngo.prelistNgo.all():
             ngo.prelistNgo.remove(user)
