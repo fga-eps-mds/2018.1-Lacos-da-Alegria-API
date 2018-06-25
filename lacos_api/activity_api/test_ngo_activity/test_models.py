@@ -23,9 +23,7 @@ class TestNGOActivity(TestCase):
         return NGOActivity.objects.create(
             name="hospGama",
             volunteers="30",
-            limit="True",
             duration="60",
-            call="True",
             schedule="2018-07-30T15:30:02-03:00"
         )
 
@@ -34,7 +32,5 @@ class TestNGOActivity(TestCase):
         w = self.setUp()
         self.assertEqual(w.name, "hospGama")
         self.assertEqual(w.volunteers, "30")
-        self.assertEqual(w.limit, "True")
         self.assertEqual(w.duration, "60")
-        self.assertEqual(w.call, "True")
         self.assertEqual(w.schedule, "2018-07-30T15:30:02-03:00")

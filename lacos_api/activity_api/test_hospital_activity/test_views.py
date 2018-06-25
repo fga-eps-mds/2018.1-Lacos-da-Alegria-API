@@ -21,12 +21,11 @@ class HospitalActivityTestView(TestCase):
         activity_detail = HospitalActivityViewSet.as_view({'get': 'retrieve'})
         activity = HospitalActivity.objects.create(
             name="hospGama",
+            image="Imagem",
+            location="Rua aleatoria",
             volunteers="30",
             novice="5",
-            support="3",
-            limit=True,
             duration="60",
-            call="True",
             schedule="2018-07-30T15:30:02-03:00"
         )
         response = activity_detail(request, pk=activity.pk)
