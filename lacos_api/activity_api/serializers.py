@@ -38,7 +38,7 @@ class NGOActivitySerializer(serializers.HyperlinkedModelSerializer):
             'duration',
             'call',
             'schedule',
-            'prelist',
+            'prelistNgo',
             'selected',
             'waiting'
         ]
