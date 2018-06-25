@@ -58,8 +58,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         print(aux)
         for i in aux:
             mylist.append(i.pk)
-        # aux = aux[0].pk
-        # aux = str(mylist)
+
         response = Response({'status': 'ok', 'aux': mylist}, status.HTTP_200_OK)
         return response
 
@@ -72,7 +71,6 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         print(aux)
         for i in aux:
             mylist.append(i.pk)
-        # aux = aux[0].pk
-        # aux = str(mylist)
+        
         response = Response({'status': 'ok', 'aux': mylist}, status.HTTP_200_OK)
         return response
