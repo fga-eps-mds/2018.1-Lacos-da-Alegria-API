@@ -62,3 +62,17 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         # aux = str(mylist)
         response = Response({'status': 'ok', 'aux': mylist}, status.HTTP_200_OK)
         return response
+
+    @action(methods=['get'], detail=True)
+    def get_user_ngos(self, request, pk=None):
+        user = models.UserProfile.objects.get(pk=pk)
+        mylist = []
+
+        aux = user.prelistNgo.all()
+        print(aux)
+        for i in aux:
+            mylist.append(i.pk)
+        # aux = aux[0].pk
+        # aux = str(mylist)
+        response = Response({'status': 'ok', 'aux': mylist}, status.HTTP_200_OK)
+        return response
