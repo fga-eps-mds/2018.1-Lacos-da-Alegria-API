@@ -187,7 +187,7 @@ class HospitalActivityTestView(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['resp'], 'Sorteado para atividade')
 
-    def test_searche_user_waiting(self):
+    def test_search_user_waiting(self):
         self.activity.waiting = ','.join([str(self.user.pk)])
         self.activity.save()
 
@@ -198,3 +198,18 @@ class HospitalActivityTestView(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['resp'], 'Na posição 1 da fila de espera.')
+
+    def test_search_user_novice_list(self):
+        self.user.role = 'Novato'
+        self.user.save()
+
+        self.activity.novice_list = ','.join([str(self.user.pk)])
+        self.activity.save()
+
+        request = self.request_factory.get('/api/hospital-activities/{}/search_user/'.format(self.activity.pk),
+                                           {'user_key': self.user.pk})
+        view = HospitalActivityViewSet.as_view({'get': 'search_user'})
+        response = view(request, pk=self.activity.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['resp'], 'Na posição 1 da fila de espera.')    

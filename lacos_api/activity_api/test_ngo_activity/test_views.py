@@ -123,7 +123,7 @@ class NGOActivityTestView(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['resp'], 'Sorteado para atividade')
 
-    def test_searche_user_waiting(self):
+    def test_search_user_waiting(self):
         self.ngo.waiting = ','.join([str(self.user.pk)])
         self.ngo.save()
 
