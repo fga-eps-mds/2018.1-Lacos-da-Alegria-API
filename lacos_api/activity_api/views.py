@@ -86,14 +86,14 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
             selected = ', '.join(map(str, selected))
             activity.selected = selected
             activity.save()
-            return Response({'status': 'Succesfully subscribed'}, status.HTTP_200_OK)
+            return Response({'status': 'Selecionado para atividade'}, status.HTTP_200_OK)
 
         if not(user.id in selected or user.id in waiting) and today.weekday() in subscribe_days:
             waiting.append(user_pk)
             waiting = ', '.join(map(str, waiting))
             activity.waiting = waiting
             activity.save()
-            return Response({'status': 'Succesfully subscribed'}, status.HTTP_200_OK)
+            return Response({'status': 'Entrou na fila de espera'}, status.HTTP_200_OK)
 
         return Response({'status': 'Você entrou na pré-lista, aguarde o resultado do sorteio'}, status.HTTP_200_OK)
 
@@ -122,7 +122,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
 
         user = UserProfile.objects.get(pk=user_pk)
         activity = self.queryset.get(pk=activity_pk)
-        response = Response({'status': 'User was not subscribed'}, status.HTTP_405_METHOD_NOT_ALLOWED)
+        response = Response({'status': 'Usuário não está inscrito na atividade'}, status.HTTP_405_METHOD_NOT_ALLOWED)
 
         novice_list = []
 
@@ -150,14 +150,14 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
                 selected = ', '.join(map(str, selected))
                 activity.selected = selected
                 activity.save()
-                response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+                response = Response({'status': 'Participação cancelada'}, status.HTTP_200_OK)
 
             elif user.id in waiting:
                 waiting.remove(user.id)
                 waiting = ', '.join(map(str, waiting))
                 activity.waiting = waiting
                 activity.save()
-                response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+                response = Response({'status': 'Participação cancelada'}, status.HTTP_200_OK)
 
         """remove user from a novice list"""
         if activity.novice_list != "":
@@ -169,7 +169,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
                 activity.save()
                 user.inscrito = False
                 user.save()
-                response = Response({'status': 'Succesfully deleted from novice queue'}, status.HTTP_200_OK)
+                response = Response({'status': 'Participação cancelada'}, status.HTTP_200_OK)
 
         return response
 
@@ -268,14 +268,14 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
             selected = ', '.join(map(str, selected))
             ngo.selected = selected
             ngo.save()
-            return Response({'status': 'Succesfully subscribed'}, status.HTTP_200_OK)
+            return Response({'status': 'Selecionado para a atividade'}, status.HTTP_200_OK)
 
         if not(user.id in selected or user.id in waiting) and today.weekday() in subscribe_days:
             waiting.append(user_pk)
             waiting = ', '.join(map(str, waiting))
             ngo.waiting = waiting
             ngo.save()
-            return Response({'status': 'Succesfully subscribed'}, status.HTTP_200_OK)
+            return Response({'status': 'Entrou na fila de espera'}, status.HTTP_200_OK)
 
         return Response({'status': 'Você entrou na pré-lista, aguarde o resultado do sorteio'}, status.HTTP_200_OK)
 
@@ -304,7 +304,7 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
 
         user = UserProfile.objects.get(pk=user_pk)
         ngo = self.queryset.get(pk=ngo_pk)
-        response = Response({'status': 'User was not subscribed'}, status.HTTP_405_METHOD_NOT_ALLOWED)
+        response = Response({'status': 'Usuário não está inscrito na atividade'}, status.HTTP_405_METHOD_NOT_ALLOWED)
 
         if user in ngo.prelistNgo.all():
             ngo.prelistNgo.remove(user)
@@ -328,13 +328,13 @@ class NGOActivityViewSet(viewsets.ModelViewSet):
 
                 selected = ', '.join(map(str, selected))
                 ngo.selected = selected
-                response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+                response = Response({'status': 'Participação cancelada'}, status.HTTP_200_OK)
 
             elif user.id in waiting:
                 waiting.remove(user.id)
                 waiting = ', '.join(map(str, waiting))
                 ngo.waiting = waiting
-                response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
+                response = Response({'status': 'Participação cancelada'}, status.HTTP_200_OK)
 
             ngo.save()
 
