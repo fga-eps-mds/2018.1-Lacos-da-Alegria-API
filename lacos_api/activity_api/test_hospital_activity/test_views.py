@@ -159,7 +159,7 @@ class HospitalActivityTestView(TestCase):
         response = view(request, pk=self.activity.pk)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['status'], 'Succesfully deleted')
+        self.assertEqual(response.data['status'], 'Participação cancelada')
 
     def test_unsubscribe_novice(self):
         self.user.role = 'Novato'
@@ -174,7 +174,7 @@ class HospitalActivityTestView(TestCase):
         response = view(request, pk=self.activity.pk)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['status'], 'Succesfully deleted from novice queue')
+        self.assertEqual(response.data['status'], 'Participação cancelada')
 
     def test_search_user(self):
         self.activity.selected = ','.join([str(self.user.pk)])

@@ -100,7 +100,7 @@ class NGOActivityTestView(TestCase):
         response = view(request, pk=self.ngo.pk)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['status'], 'Succesfully deleted')
+        self.assertEqual(response.data['status'], 'Participação cancelada)
 
         self.ngo.prelistNgo.add(self.user)
         self.ngo.selected = ','.join([str(self.user.pk)])
@@ -109,7 +109,7 @@ class NGOActivityTestView(TestCase):
         response = view(request, pk=self.ngo.pk)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['status'], 'Succesfully deleted')
+        self.assertEqual(response.data['status'], 'Participação cancelada')
 
     def test_search_user(self):
         self.ngo.selected = ','.join([str(self.user.pk)])
