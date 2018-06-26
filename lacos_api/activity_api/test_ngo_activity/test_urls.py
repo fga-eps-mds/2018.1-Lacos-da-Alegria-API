@@ -34,12 +34,10 @@ class TestNGOActivityURLs(APITestCase):
             'http://localhost:8000/api/ngo-activities/',
             {
                 'name': 'hospGama',
+                'location': 'qualquer coisa',
+                'image': 'ibages',
                 'volunteers': '30',
-                'limit': 'True',
-                'status': '1',
                 'duration': '30',
-                'subscription': 'True',
-                'call': 'True',
                 'schedule': '2018-07-30T15:30:02-03:00'
             },
             format='json'

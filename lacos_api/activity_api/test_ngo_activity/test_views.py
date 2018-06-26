@@ -22,9 +22,7 @@ class NGOActivityTestView(TestCase):
         activity = NGOActivity.objects.create(
             name="hospGama",
             volunteers="30",
-            limit=True,
             duration="60",
-            call="True",
             schedule="2018-07-30T15:30:02-03:00"
         )
         response = activity_detail(request, pk=activity.pk)
