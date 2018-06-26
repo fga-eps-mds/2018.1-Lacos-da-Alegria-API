@@ -1,11 +1,6 @@
 from django.conf.urls import url, include
 
 from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView,
-)
 
 from lacos_api.user_api.views import UserProfileViewSet
 from lacos_api.activity_api.views import HospitalActivityViewSet, NGOActivityViewSet
