@@ -1,68 +1,149 @@
-from django.test import RequestFactory
-from ..models import NGOActivity
+from django.test import TestCase
+from rest_framework import status
 from rest_framework.test import APIRequestFactory
-from test_plus.test import TestCase
-from ..views import NGOActivityViewSet
-
-# from ..views import (UserRedirectView, UserUpdateView)
-
-
-class BaseUserTestCase(TestCase):
-
-    def setUp(self):
-        self.user = self.make_user()
-        self.factory = RequestFactory()
+from lacos_api.activity_api.views import NGOActivityViewSet
+from lacos_api.user_api.models import UserProfile
+from ..models import NGOActivity
 
 
 class NGOActivityTestView(TestCase):
-    # Should create activity view
-    def test_activity_viewset(self):
-        request = APIRequestFactory().get("")
-        activity_detail = NGOActivityViewSet.as_view({'get': 'retrieve'})
-        activity = NGOActivity.objects.create(
+    def setUp(self):
+        self.request_factory = APIRequestFactory()
+        self.user = UserProfile.objects.create(
+            username="ZecaPagodinho",
+            password="12345abc",
+            email="testeeee@teste.com",
+            cpf="246966600",
+            name="zecapagodinho",
+            birth="2018-04-26",
+            region="cataratas",
+            preference="deus",
+            ddd="11",
+            whatsapp="40028922",
+            address="casa",
+            howDidYouKnow="pericles",
+            want_ongs="True",
+        )
+
+        self.ngo = NGOActivity.objects.create(
             name="hospGama",
             volunteers="30",
             duration="60",
             schedule="2018-07-30T15:30:02-03:00"
         )
-        response = activity_detail(request, pk=activity.pk)
-        self.assertEqual(response.status_code, 200)
 
-# class TestUserRedirectView(BaseUserTestCase):
+    def test_subscribe(self):
+        self.user.role = 'Voluntario'
+        self.user.save()
 
-#     def test_get_redirect_url(self):
-#         # Instantiate the view directly. Never do this outside a test!
-#         view = UserRedirectView()
-#         # Generate a fake request
-#         request = self.factory.get("/fake-url")
-#         # Attach the user to the request
-#         request.user = self.user
-#         # Attach the request to the view
-#         view.request = request
-#         # Expect: '/users/testuser/', as that is the default username for
-#         #   self.make_user()
-#         self.assertEqual(view.get_redirect_url(), "/users/testuser/")
+        request = self.request_factory.get('/api/hospital-activities/{}/relate_with_ngo/'.format(self.ngo.pk),
+                                           {'user_key': self.user.pk})
+        view = NGOActivityViewSet.as_view({'get': 'relate_with_ngo'})
+        response = view(request, pk=self.ngo.pk)
 
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['status'], 'Você entrou na pré-lista, aguarde o resultado do sorteio')
 
-# class TestUserUpdateView(BaseUserTestCase):
+        ngo2 = NGOActivity.objects.create(
+            name="hospGama",
+            volunteers="30",
+            duration="60",
+            schedule="2018-07-30T15:30:02-03:00"
+        )
 
-#     def setUp(self):
-#         # call BaseUserTestCase.setUp()
-#         super(TestUserUpdateView, self).setUp()
-#         # Instantiate the view directly. Never do this outside a test!
-#         self.view = UserUpdateView()
-#         # Generate a fake request
-#         request = self.factory.get("/fake-url")
-#         # Attach the user to the request
-#         request.user = self.user
-#         # Attach the request to the view
-#         self.view.request = request
+        response = view(request, pk=ngo2.pk)
 
-#     def test_get_success_url(self):
-#         # Expect: '/users/testuser/', as that is the default username for
-#         #   self.make_user()
-#         self.assertEqual(self.view.get_success_url(), "/users/testuser/")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.data['status'], 'Conflito de horário com outra atividade '
+                         'que você está participando!')
 
-#     def test_get_object(self):
-#         # Expect: self.user, as that is the request's user object
-#         self.assertEqual(self.view.get_object(), self.user)
+        ngo2.schedule = "2018-07-30T15:02:00-03:00"
+        ngo2.save()
+
+        response = view(request, pk=ngo2.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.data['status'], 'Conflito de horário com outra atividade '
+                         'que você está participando!')
+
+        ngo2.schedule = "2018-07-30T16:02:00-03:00"
+        ngo2.save()
+
+        response = view(request, pk=ngo2.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.data['status'], 'Conflito de horário com outra atividade '
+                         'que você está participando!')
+
+        ngo2.schedule = "2018-06-25T12:00:02-03:00"
+        ngo2.save()
+
+        response = view(request, pk=ngo2.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.data['status'], 'Você não pode entrar na pré-lista faltando 2hs '
+                         'ou menos para o início da atividade.')
+
+    def test_unsubscribe(self):
+        request = self.request_factory.get('/api/ngo-activities/{}/unsubscribe/'.format(self.ngo.pk),
+                                           {'user_key': self.user.pk})
+        view = NGOActivityViewSet.as_view({'get': 'unsubscribe'})
+        response = view(request, pk=self.ngo.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.data['status'], 'User was not subscribed')
+
+        self.ngo.prelistNgo.add(self.user)
+        self.ngo.waiting = ','.join([str(self.user.pk)])
+        self.ngo.save()
+
+        response = view(request, pk=self.ngo.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['status'], 'Succesfully deleted')
+
+        self.ngo.prelistNgo.add(self.user)
+        self.ngo.selected = ','.join([str(self.user.pk)])
+        self.ngo.save()
+
+        response = view(request, pk=self.ngo.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['status'], 'Succesfully deleted')
+
+    def test_search_user(self):
+        self.ngo.selected = ','.join([str(self.user.pk)])
+        self.ngo.save()
+
+        request = self.request_factory.get('/api/hospital-activities/{}/search_user_ngo/'.format(self.ngo.pk),
+                                           {'user_key': self.user.pk})
+        view = NGOActivityViewSet.as_view({'get': 'search_user_ngo'})
+        response = view(request, pk=self.ngo.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['resp'], 'Sorteado para atividade')
+
+    def test_search_user_waiting(self):
+        self.ngo.waiting = ','.join([str(self.user.pk)])
+        self.ngo.save()
+
+        request = self.request_factory.get('/api/hospital-activities/{}/search_user_ngo/'.format(self.ngo.pk),
+                                           {'user_key': self.user.pk})
+        view = NGOActivityViewSet.as_view({'get': 'search_user_ngo'})
+
+        response = view(request, pk=self.ngo.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['resp'], 'Na posição 1 da fila de espera.')
+
+    def test_search_user_prelist(self):
+        self.ngo.prelistNgo.add(self.user.pk)
+        self.ngo.save()
+
+        request = self.request_factory.get('/api/hospital-activities/{}/search_user_ngo/'.format(self.ngo.pk),
+                                           {'user_key': self.user.pk})
+        view = NGOActivityViewSet.as_view({'get': 'search_user_ngo'})
+        response = view(request, pk=self.ngo.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['resp'], 'Inscrito na pré-lista')

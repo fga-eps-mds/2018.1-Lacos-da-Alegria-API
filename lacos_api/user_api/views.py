@@ -12,10 +12,6 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
-    # authentication_classes = (TokenAuthentication,)
-    # permission_classes = (permissions.UpdateOwnProfile,)
-    # filter_backends = (filters.SearchFilter,)
-    # search_fields = ('name', 'email',)
 
     @action(methods=['post'], detail=True)
     def delete_user(self, request, pk=None):
@@ -62,8 +58,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         print(aux)
         for i in aux:
             mylist.append(i.pk)
-        # aux = aux[0].pk
-        # aux = str(mylist)
+
         response = Response({'status': 'ok', 'aux': mylist}, status.HTTP_200_OK)
         return response
 
@@ -76,7 +71,5 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         print(aux)
         for i in aux:
             mylist.append(i.pk)
-        # aux = aux[0].pk
-        # aux = str(mylist)
         response = Response({'status': 'ok', 'aux': mylist}, status.HTTP_200_OK)
         return response
