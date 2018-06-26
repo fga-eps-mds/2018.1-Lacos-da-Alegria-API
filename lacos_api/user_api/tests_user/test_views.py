@@ -1,4 +1,3 @@
-from django.test import RequestFactory
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
@@ -50,8 +49,6 @@ class UserProfileTestView(TestCase):
             call="True",
             schedule="2018-07-30T15:30:02-03:00"
         )
-
-
 
     def test_user_viewset_Post(self):
         """It should post an user"""
@@ -113,7 +110,6 @@ class UserProfileTestView(TestCase):
         print(response.data['error'])
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(response.data['error'], 'Passwords do not match')
-
 
     def test_get_user_activities(self):
         self.activity.prelist.add(self.user)
@@ -177,16 +173,3 @@ class UserProfileTestView(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['status'], 'ok')
         self.assertEqual(response.data['aux'], mylist)
-
-
-    # def test_edit_user(self):
-    #     request = self.request_factory.post('/api/profile/{}/edit_user/'.format(self.user.pk))
-    #     view = UserProfileViewSet.as_view({'post': 'edit_user'})
-    #     response = view(request, pk=self.user.pk)
-    #
-    #     self.user.set_password(self.user.password)
-    #     self.user.save()
-    #
-    #     print(response.data['password'])
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(response.data['password'], self.user.password)

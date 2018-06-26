@@ -114,3 +114,28 @@ class NGOActivityTestView(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['status'], 'Succesfully deleted')
+
+    def test_search_user(self):
+        self.ngo.selected = ','.join([str(self.user.pk)])
+        self.ngo.save()
+
+        request = self.request_factory.get('/api/hospital-activities/{}/search_user_ngo/'.format(self.ngo.pk),
+                                           {'user_key': self.user.pk})
+        view = NGOActivityViewSet.as_view({'get': 'search_user_ngo'})
+        response = view(request, pk=self.ngo.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['resp'], 'Sorteado para atividade')
+
+    def test_searche_user_waiting(self):
+        self.ngo.waiting = ','.join([str(self.user.pk)])
+        self.ngo.save()
+
+        request = self.request_factory.get('/api/hospital-activities/{}/search_user_ngo/'.format(self.ngo.pk),
+                                           {'user_key': self.user.pk})
+        view = NGOActivityViewSet.as_view({'get': 'search_user_ngo'})
+
+        response = view(request, pk=self.ngo.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['resp'], 'Na posição 1 da fila de espera.')

@@ -71,6 +71,5 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         print(aux)
         for i in aux:
             mylist.append(i.pk)
-        
         response = Response({'status': 'ok', 'aux': mylist}, status.HTTP_200_OK)
         return response
