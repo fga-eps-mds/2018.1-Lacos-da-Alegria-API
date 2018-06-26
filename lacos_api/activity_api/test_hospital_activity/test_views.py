@@ -141,7 +141,7 @@ class HospitalActivityTestView(TestCase):
         response = view(request, pk=self.activity.pk)
 
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        self.assertEqual(response.data['status'], 'User was not subscribed')
+        self.assertEqual(response.data['status'], 'Usuário não está inscrito na atividade')
 
         self.activity.prelist.add(self.user)
         self.activity.waiting = ','.join([str(self.user.pk)])
@@ -150,7 +150,7 @@ class HospitalActivityTestView(TestCase):
         response = view(request, pk=self.activity.pk)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['status'], 'Succesfully deleted')
+        self.assertEqual(response.data['status'], 'Participação cancelada')
 
         self.activity.prelist.add(self.user)
         self.activity.selected = ','.join([str(self.user.pk)])

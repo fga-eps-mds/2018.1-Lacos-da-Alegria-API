@@ -91,7 +91,7 @@ class NGOActivityTestView(TestCase):
         response = view(request, pk=self.ngo.pk)
 
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        self.assertEqual(response.data['status'], 'User was not subscribed')
+        self.assertEqual(response.data['status'], 'Usuário não está inscrito na atividade')
 
         self.ngo.prelistNgo.add(self.user)
         self.ngo.waiting = ','.join([str(self.user.pk)])
