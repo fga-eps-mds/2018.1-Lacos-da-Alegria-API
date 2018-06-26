@@ -1,3 +1,7 @@
+ [![Maintainability](https://api.codeclimate.com/v1/badges/f41f5278a9346c0b715a/maintainability)](https://codeclimate.com/github/fga-gpp-mds/2018.1-Lacos-da-Alegria-API/maintainability)
+ [![Test Coverage](https://api.codeclimate.com/v1/badges/f41f5278a9346c0b715a/test_coverage)](https://codeclimate.com/github/fga-gpp-mds/2018.1-Lacos-da-Alegria-API/test_coverage)
+ 
+ 
  ![logo-wide-lacos](http://oi66.tinypic.com/2lxvvw7.jpg)
 <!-- Space for badges -->
 
