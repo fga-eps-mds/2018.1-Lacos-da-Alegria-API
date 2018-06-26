@@ -1,3 +1,4 @@
+
 [![Travis branch](https://img.shields.io/travis/fga-gpp-mds/2018.1-Lacos-da-Alegria.svg)](https://github.com/fga-gpp-mds/2018.1-Lacos-da-Alegria)
 
 [![Read the Docs](https://img.shields.io/readthedocs/pip.svg)](https://github.com/fga-gpp-mds/2018.1-Lacos-da-Alegria)
@@ -6,8 +7,6 @@
 [![license](https://img.shields.io/github/license/fga-gpp-mds/2018.1-Lacos-da-Alegria.svg)](https://github.com/fga-gpp-mds/2018.1-Lacos-da-Alegria)
 
 ![logo-wide-lacos](http://oi66.tinypic.com/2lxvvw7.jpg)
-<!-- Space for badges -->
-
 
 Uma API open source escrita em Python, utilizando Django Rest Framework. É desenhado para ser extendível, escalável, simples e mutável.
 

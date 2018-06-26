@@ -114,6 +114,7 @@ LOCAL_APPS = [
     'lacos_api.general.apps.GeneralConfig',
     'lacos_api.user_api.apps.UserApiConfig',
     'lacos_api.activity_api.apps.ActivityApiConfig',
+    'lacos_api.news_api.apps.NewsApiConfig',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -250,13 +251,13 @@ FIXTURE_DIRS = (
 )
 
 # EMAIL
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+# -----------------------NGOActivity----------------------------------------------------
+# https://docs.djangoprojNGOActivity.com/en/dev/ref/settings/#email-backend
+EMAIL_BACKEND = env('DJANNGOActivityEMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 
 # ADMIN
-# ------------------------------------------------------------------------------
-# Django Admin URL regex.
+# -----------------------NGOActivity----------------------------------------------------
+# Django Admin URL regex.NGOActivity
 ADMIN_URL = r'^admin/'
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
@@ -319,7 +320,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
     ),
-
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 

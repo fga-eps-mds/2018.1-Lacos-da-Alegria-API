@@ -13,12 +13,11 @@ class TestHospitalActivity(TestCase):
     def setUp(self):
         return HospitalActivity.objects.create(
             name="hospGama",
+            image="Imagem",
+            location="Rua aleatoria",
             volunteers="30",
             novice="5",
-            support="3",
-            limit="True",
             duration="60",
-            call="True",
             schedule="2018-07-30T15:30:02-03:00"
         )
 
@@ -26,10 +25,9 @@ class TestHospitalActivity(TestCase):
     def test_create_activity(self):
         w = self.setUp()
         self.assertEqual(w.name, "hospGama")
+        self.assertEqual(w.image, "Imagem")
+        self.assertEqual(w.location, "Rua aleatoria")
         self.assertEqual(w.volunteers, "30")
         self.assertEqual(w.novice, "5")
-        self.assertEqual(w.support, "3")
-        self.assertEqual(w.limit, "True")
         self.assertEqual(w.duration, "60")
-        self.assertEqual(w.call, "True")
         self.assertEqual(w.schedule, "2018-07-30T15:30:02-03:00")
