@@ -212,4 +212,16 @@ class HospitalActivityTestView(TestCase):
         response = view(request, pk=self.activity.pk)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['resp'], 'Na posição 1 da fila de espera.')    
+        self.assertEqual(response.data['resp'], 'Na posição 1 da fila de espera.')
+
+    def test_search_user_prelist(self):
+        self.activity.prelist.add(self.user.pk)
+        self.activity.save()
+
+        request = self.request_factory.get('/api/hospital-activities/{}/search_user/'.format(self.activity.pk),
+                                           {'user_key': self.user.pk})
+        view = HospitalActivityViewSet.as_view({'get': 'search_user'})
+        response = view(request, pk=self.activity.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['resp'], 'Inscrito na pré-lista')
