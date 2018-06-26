@@ -3,19 +3,13 @@ from rest_framework import serializers
 from . import models
 
 
-class HelloSerializer(serializers.Serializer):
-    """Serializes a name field for testing our APIView."""
-
-    name = serializers.CharField(max_length=10)
-    address = serializers.CharField(min_length=3)
-
-
-class UserProfileSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
     """A serializer for our user profile objects."""
 
     class Meta:
         model = models.UserProfile
         fields = (
+            'url',
             'id',
             'email',
             'name',
@@ -30,9 +24,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'want_ongs',
             'ddd',
             'whatsapp',
-            'genre'
+            'genre',
+            'role',
+            'inscrito'
         )
-        extra_kwargs = {'password': {'write_only': True}}
+        # fields = '__all__'
+        # extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         """Create and return a new user."""
@@ -50,36 +47,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
             want_ongs=validated_data['want_ongs'],
             ddd=validated_data['ddd'],
             whatsapp=validated_data['whatsapp'],
-            genre=validated_data['genre']
+            genre=validated_data['genre'],
+            role=validated_data['role'],
+            inscrito=validated_data['inscrito']
         )
 
         user.set_password(validated_data['password'])
         user.save()
 
         return user
-
-
-class ProfileFeedItemSerializer(serializers.ModelSerializer):
-    """A serializer for profile feed items."""
-
-    class Meta:
-        model = models.ProfileFeedItem
-        fields = ('id', 'user_profile', 'status_text', 'created_on')
-        extra_kwargs = {'user_profile': {'read_only': True}}
-
-
-class ActivitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Activity
-        fields = [
-            'id',
-            'name',
-            'volunteers',
-            'limit',
-            'created',
-            'status',
-            'time',
-            'duration',
-            'subscription',
-            'call'
-        ]

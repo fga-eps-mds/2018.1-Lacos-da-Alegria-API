@@ -292,3 +292,6 @@ lacos_api/media/
 .env
 .envs/*
 !.envs/.local/
+
+# Tests
+.pytest_cache/

@@ -1,9 +1,12 @@
- [![Maintainability](https://api.codeclimate.com/v1/badges/f41f5278a9346c0b715a/maintainability)](https://codeclimate.com/github/fga-gpp-mds/2018.1-Lacos-da-Alegria-API/maintainability)
- [![Test Coverage](https://api.codeclimate.com/v1/badges/f41f5278a9346c0b715a/test_coverage)](https://codeclimate.com/github/fga-gpp-mds/2018.1-Lacos-da-Alegria-API/test_coverage)
- 
- 
- ![logo-wide-lacos](http://oi66.tinypic.com/2lxvvw7.jpg)
-<!-- Space for badges -->
+
+[![Travis branch](https://img.shields.io/travis/fga-gpp-mds/2018.1-Lacos-da-Alegria.svg)](https://github.com/fga-gpp-mds/2018.1-Lacos-da-Alegria)
+
+[![Read the Docs](https://img.shields.io/readthedocs/pip.svg)](https://github.com/fga-gpp-mds/2018.1-Lacos-da-Alegria)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d4e2fff36d305c96179e/maintainability)](https://codeclimate.com/github/fga-gpp-mds/2018.1-Lacos-da-Alegria/maintainability)
+[![GitHub issues](https://img.shields.io/github/issues/fga-gpp-mds/2018.1-Lacos-da-Alegria.svg)](https://github.com/fga-gpp-mds/2018.1-Lacos-da-Alegria)
+[![license](https://img.shields.io/github/license/fga-gpp-mds/2018.1-Lacos-da-Alegria.svg)](https://github.com/fga-gpp-mds/2018.1-Lacos-da-Alegria)
+
+![logo-wide-lacos](http://oi66.tinypic.com/2lxvvw7.jpg)
 
 Uma API open source escrita em Python, utilizando Django Rest Framework. É desenhado para ser extendível, escalável, simples e mutável.
 
