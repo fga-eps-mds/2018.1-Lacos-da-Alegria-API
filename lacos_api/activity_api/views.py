@@ -16,6 +16,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
 
     @action(methods=['get'], detail=True)
     def subscribe(self, request, pk=None):
+        """here is received the id of the activity and the user."""
         activity_pk = pk
         user_pk = request.query_params.get('user_key', None)
         activity = self.queryset.get(pk=activity_pk)
@@ -23,6 +24,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
 
         novice_list = []
 
+        """enroll the user in the list of novice"""
         if user.role == 'Novato':
             if user.inscrito is False:
                 if activity.novice_list != "":
@@ -48,6 +50,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         selected = []
         waiting = []
 
+        """check if less than two hours to activity or check conflict of schedules of activities"""
         if difference < timedelta(hours=2):
             return Response({'status': 'Você não pode entrar na pré-lista faltando 2hs '
                              'ou menos para o início da atividade.'}, status.HTTP_403_FORBIDDEN)
@@ -123,6 +126,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
 
         novice_list = []
 
+        """remove user from prelist and selected or waiting"""
         if user in activity.prelist.all():
             activity.prelist.remove(user)
             selected = []
@@ -155,6 +159,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
                 activity.save()
                 response = Response({'status': 'Succesfully deleted'}, status.HTTP_200_OK)
 
+        """remove user from a novice list"""
         if activity.novice_list != "":
             novice_list = [int(n) for n in activity.novice_list.split(',')]
             if user.id in novice_list:
@@ -174,6 +179,7 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
         user = UserProfile.objects.get(pk=user_pk)
         activity = self.queryset.get(pk=pk)
 
+        """search for user in activity lists"""
         if activity.selected != "":
             selected = [int(n) for n in activity.selected.split(',')]
             if user.id in selected:
@@ -204,6 +210,10 @@ class HospitalActivityViewSet(viewsets.ModelViewSet):
 class NGOActivityViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.NGOActivitySerializer
     queryset = models.NGOActivity.objects.all()
+
+    """Objective: this method will enroll the user in ngo activity.
+       Parameters: request, pk.
+       Returns: it returns a response as status """
 
     @action(methods=['get'], detail=True)
     def relate_with_ngo(self, request, pk=None):
