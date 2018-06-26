@@ -29,10 +29,7 @@ class HospitalActivityTestView(TestCase):
             name="hospGama",
             volunteers="30",
             novice="5",
-            support="3",
-            limit=True,
             duration="60",
-            call="True",
             schedule="2018-07-30T15:30:02-03:00"
         )
 
@@ -60,12 +57,11 @@ class HospitalActivityTestView(TestCase):
 
         activity2 = HospitalActivity.objects.create(
             name="hospGama",
+            image="Imagem",
+            location="Rua aleatoria",
             volunteers="30",
             novice="5",
-            support="3",
-            limit=True,
             duration="60",
-            call="True",
             schedule="2018-07-30T15:30:02-03:00"
         )
 
@@ -101,10 +97,7 @@ class HospitalActivityTestView(TestCase):
             name="hospGama",
             volunteers="30",
             novice="5",
-            support="3",
-            limit=True,
             duration="60",
-            call="True",
             schedule="2018-07-30T15:30:02-03:00"
         )
 

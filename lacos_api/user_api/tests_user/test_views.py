@@ -33,9 +33,7 @@ class UserProfileTestView(TestCase):
         self.ngo = NGOActivity.objects.create(
             name="hospGama",
             volunteers="30",
-            limit=True,
             duration="60",
-            call="True",
             schedule="2018-07-30T15:30:02-03:00"
         )
 
@@ -43,10 +41,7 @@ class UserProfileTestView(TestCase):
             name="hospGama",
             volunteers="30",
             novice="5",
-            support="3",
-            limit=True,
             duration="60",
-            call="True",
             schedule="2018-07-30T15:30:02-03:00"
         )
 
