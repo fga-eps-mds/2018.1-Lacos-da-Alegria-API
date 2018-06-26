@@ -24,6 +24,6 @@ class NGOActivity(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     duration = models.IntegerField()
     schedule = models.DateTimeField(auto_now_add=False)
-    prelist = models.ManyToManyField('user_api.UserProfile', blank=True, related_name='prelistNgo')
+    prelistNgo = models.ManyToManyField('user_api.UserProfile', blank=True, related_name='prelistNgo')
     selected = models.CharField(max_length=10000, default='')
     waiting = models.CharField(max_length=10000, default='')
